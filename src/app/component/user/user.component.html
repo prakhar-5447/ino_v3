@@ -24,11 +24,35 @@
       <code class="text-lg leading-6">{{ phone_no }}</code>
       <code class="text-md text-gray-dark leading-6">{{ email }}</code>
       <p
-        class="bg-gray-light/[0.7] p-4 rounded-lg drop-shadow-xl text-lg leading-5 text-justify capitalize w-[25rem]"
+        class="bg-gray-light/[0.7] p-4 rounded-lg drop-shadow-xl text-lg leading-5 text-justify capitalize w-[25rem] mt-4"
       >
         {{ description }}
       </p>
     </div>
   </div>
-  <div class=""></div>
+  <div class="h-full overflow-auto">
+    <div class="grid grid-cols-3 gap-5 pl-4">
+      <button
+        class="hover:drop-shadow-xl rounded-md bg-white w-44 cursor-pointer my-2 border-dashed border"
+        (click)="create_new()"
+      >
+        <div
+          class="w-full items-center justify-center text-gray-dark/[0.7] text-2xl font-medium"
+        >
+          Add New +
+        </div>
+      </button>
+      <button
+        *ngFor="let i of project"
+        class="hover:drop-shadow-2xl w-44 cursor-pointer my-2"
+        (click)="openDialog()"
+      >
+        <img
+          class="w-full rounded-md opacity-50 hover:opacity-100 transition duration-400 ease-in-out"
+          src="/assets/images/user/Anime-Wallpaper-Desktop-Background-50.jpg"
+          alt=""
+        />
+      </button>
+    </div>
+  </div>
 </div>

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AddProjectComponent } from 'src/app/modal/add-project/add-project.component';
+import { Dialog } from '@angular/cdk/dialog';
+import { ViewProjectComponent } from 'src/app/modal/view-project/view-project.component';
 
 @Component({
   selector: 'app-user',
@@ -10,9 +13,10 @@ export class UserComponent implements OnInit {
   phone_no!: String;
   email!: String;
   description!: String;
+  project!: any[];
   socials = [1, 2, 3, 4, 5, 6];
 
-  constructor() {
+  constructor(public dialog: Dialog) {
     this.name = 'pratham sahu';
     this.phone_no = '+91 8349378115';
     this.email = 'sahupratham022003@gmail.com';
@@ -21,4 +25,10 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+  create_new() {
+    this.dialog.open(AddProjectComponent);
+  }
+  openDialog() {
+    this.dialog.open(ViewProjectComponent);
+  }
 }
