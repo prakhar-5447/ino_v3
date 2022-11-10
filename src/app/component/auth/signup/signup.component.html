@@ -33,7 +33,7 @@
     <div>
       <form
         (ngSubmit)="create_account()"
-        formGroup="signup"
+        [formGroup]="signup"
         class="flex flex-col items-center"
       >
         <label

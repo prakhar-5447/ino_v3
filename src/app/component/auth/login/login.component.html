@@ -33,7 +33,7 @@
     <div class="">
       <form
         (ngSubmit)="create_account()"
-        formGroup="signup"
+        [formGroup]="login"
         class="flex flex-col items-center"
       >
         <mat-form-field class="w-80" appearance="fill">
