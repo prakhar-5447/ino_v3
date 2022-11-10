@@ -4,8 +4,8 @@ from django.http.response import JsonResponse
 from django.core.files.storage import default_storage
 from django.http import FileResponse
 
-from ino_v3.models import Signup, Login
-from ino_v3.serializers import SignupSerializer, LoginSerializer
+from ino_v3.models import Signup, Login, Social, Followed, Project
+from ino_v3.serializers import SignupSerializer, LoginSerializer, SocialSerializer, FollowedSerializer, ProjectSerializer
 
 # Create your views here.
 
@@ -74,3 +74,47 @@ def uploadApi(request, name=''):
         img = open('./Photos/' + name, 'rb')
         response = FileResponse(img)
         return response
+
+
+@csrf_exempt
+def socialApi(request, userId=0):
+    if request.method == "POST":
+        reqData = JSONParser().parse(request)
+        socailData = Social.objects.filter(Username_id=reqData["Username"])
+        if socailData:
+            return JsonResponse({'success': False, 'msg': "Social Already Exist"})
+        social_serializer = SocialSerializer(data=reqData)
+        if social_serializer.is_valid():
+            social_serializer.save()
+            return JsonResponse({'success': True, 'msg': "Social Added Successfully"})
+        return JsonResponse({'success': False, 'msg': "Failed"})
+    elif request.method == "GET":
+        socailData = Social.objects.filter(Username_id=userId)
+        if socailData:
+            social_serializer = SocialSerializer(socailData, many=True)
+            return JsonResponse({'success': True, 'msg': social_serializer.data})
+        return JsonResponse({'success': False, 'msg': "Social Not Found"})
+    elif request.method == "PUT":
+        reqData = JSONParser().parse(request)
+        Username = Signup.objects.filter(
+            Id=userId)
+        if not Username:
+            return JsonResponse({'success': False, 'msg': "User Not Found"})
+        socialData = Social.objects.filter(
+            Username_id=userId, Id=reqData["Id"])
+        if socialData:
+            newSocial = {
+                "Instagram": reqData["Instagram"],
+                "Twitter": reqData["Twitter"],
+                "Github": reqData["Github"],
+                "LinkedIn": reqData["LinkedIn"],
+                "Portfolio": reqData["Portfolio"],
+                "Other": reqData["Other"],
+            }
+            social_serializer = SocialSerializer(
+                socialData, data=newSocial)
+            if social_serializer.is_valid():
+                social_serializer.save()
+                return JsonResponse({'success': True, 'msg': "Update Sucessfully"})
+            return JsonResponse({'success': False, 'msg': "Failed"})
+        return JsonResponse({'success': False, 'msg': "Social Not Found"})
