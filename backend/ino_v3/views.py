@@ -81,6 +81,9 @@ def socialApi(request, userId=0):
     if request.method == "POST":
         reqData = JSONParser().parse(request)
         socailData = Social.objects.filter(Username_id=reqData["Username"])
+        username = Signup.objects.filter(Id=reqData["Username"])
+        if not username:
+            return JsonResponse({'success': False, 'msg': "User Not Found"})
         if socailData:
             return JsonResponse({'success': False, 'msg': "Social Already Exist"})
         social_serializer = SocialSerializer(data=reqData)
@@ -125,6 +128,9 @@ def followApi(request, userId=0):
     if request.method == "POST":
         reqData = JSONParser().parse(request)
         followData = Followed.objects.filter(Username_id=reqData["Username"])
+        username = Signup.objects.filter(Id=reqData["Username"])
+        if not username:
+            return JsonResponse({'success': False, 'msg': "User Not Found"})
         if followData:
             return JsonResponse({'success': False, 'msg': "Followed Already Exist"})
         follow_serializer = FollowedSerializer(data=reqData)
@@ -158,3 +164,39 @@ def followApi(request, userId=0):
                 return JsonResponse({'success': True, 'msg': "Update Sucessfully"})
             return JsonResponse({'success': False, 'msg': "Failed"})
         return JsonResponse({'success': False, 'msg': "Followed Not Found"})
+
+
+@csrf_exempt
+def projectApi(request, userId=0, id=0):
+    if request.method == "POST":
+        reqData = JSONParser().parse(request)
+        username = Signup.objects.filter(Id=reqData["Username"])
+        if not username:
+            return JsonResponse({'success': False, 'msg': "User Not Found"})
+        project_serializer = ProjectSerializer(data=reqData)
+        if project_serializer.is_valid():
+            project_serializer.save()
+            return JsonResponse({'success': True, 'msg': "Project Added Successfully"})
+        return JsonResponse({'success': False, 'msg': "Failed"})
+    elif request.method == "GET":
+        projeData = Project.objects.filter(Username_id=userId)
+        if projeData:
+            project_serializer = ProjectSerializer(projeData, many=True)
+            return JsonResponse({'success': True, 'msg': project_serializer.data})
+        return JsonResponse({'success': False, 'msg': "No Project Found"})
+    elif request.method == "DELETE":
+        username = Signup.objects.filter(Id=userId)
+        if not username:
+            return JsonResponse({'success': False, 'msg': "User Not Found"})
+        username = Signup.objects.filter(Id=userId)
+        if not username:
+            return JsonResponse({'success': False, 'msg': "User Not Found"})
+        projectData = Project.objects.filter(Id=id)
+        if not projectData:
+            return JsonResponse({'success': False, 'msg': "Project Not Found"})
+        projectData = Project.objects.filter(Username_id=userId, Id=id)
+        if not projectData:
+            return JsonResponse({'success': False, 'msg': "Project Not Belong to the User"})
+        projeData = Project.objects.filter(Id=id)
+        projeData.delete()
+        return JsonResponse("Deleted Sucessfully", safe=False)

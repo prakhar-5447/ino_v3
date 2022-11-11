@@ -16,4 +16,7 @@ urlpatterns = [
     path('social/<str:userId>', views.socialApi),
     url(r'^follow$', views.followApi),
     path('follow/<str:userId>', views.followApi),
+    url(r'^project$', views.projectApi),
+    path('project/<str:userId>', views.projectApi),
+    path('project/<str:userId>/<str:id>', views.projectApi),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
