@@ -14,4 +14,6 @@ urlpatterns = [
     path('upload/<str:name>', views.uploadApi),
     url(r'^social$', views.socialApi),
     path('social/<str:userId>', views.socialApi),
+    url(r'^follow$', views.followApi),
+    path('follow/<str:userId>', views.followApi),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

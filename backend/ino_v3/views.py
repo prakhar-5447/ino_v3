@@ -118,3 +118,43 @@ def socialApi(request, userId=0):
                 return JsonResponse({'success': True, 'msg': "Update Sucessfully"})
             return JsonResponse({'success': False, 'msg': "Failed"})
         return JsonResponse({'success': False, 'msg': "Social Not Found"})
+
+
+@csrf_exempt
+def followApi(request, userId=0):
+    if request.method == "POST":
+        reqData = JSONParser().parse(request)
+        followData = Followed.objects.filter(Username_id=reqData["Username"])
+        if followData:
+            return JsonResponse({'success': False, 'msg': "Followed Already Exist"})
+        follow_serializer = FollowedSerializer(data=reqData)
+        if follow_serializer.is_valid():
+            follow_serializer.save()
+            return JsonResponse({'success': True, 'msg': "Followed Added Successfully"})
+        return JsonResponse({'success': False, 'msg': "Failed"})
+    elif request.method == "GET":
+        followData = Followed.objects.filter(Username_id=userId)
+        if followData:
+            follow_serializer = FollowedSerializer(
+                followData, many=True)
+            return JsonResponse({'success': True, 'msg': follow_serializer.data})
+        return JsonResponse({'success': False, 'msg': "Folowed Not Found"})
+    elif request.method == "PUT":
+        reqData = JSONParser().parse(request)
+        Username = Followed.objects.filter(
+            Id=userId)
+        if not Username:
+            return JsonResponse({'success': False, 'msg': "User Not Found"})
+        followData = Followed.objects.filter(
+            Username_id=userId, Id=reqData["Id"])
+        if followData:
+            newFollow = {
+                "Followed": reqData["Followed"],
+            }
+            follow_serializer = FollowedSerializer(
+                followData, data=newFollow)
+            if follow_serializer.is_valid():
+                follow_serializer.save()
+                return JsonResponse({'success': True, 'msg': "Update Sucessfully"})
+            return JsonResponse({'success': False, 'msg': "Failed"})
+        return JsonResponse({'success': False, 'msg': "Followed Not Found"})
