@@ -1,0 +1,73 @@
+<div class="bg-white py-8">
+  <form (ngSubmit)="send()" [formGroup]="social" class="flex flex-col">
+    <div class="w-full flex justify-center p-8">
+      <div class="flex flex-col mr-8">
+        <mat-form-field class="w-80" appearance="fill">
+          <mat-label>Instagram</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder=""
+            formControlName="instagram"
+            value=""
+          />
+        </mat-form-field>
+        <mat-form-field class="w-80" appearance="fill">
+          <mat-label>Twitter</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder=""
+            formControlName="twitter"
+            value=""
+          />
+        </mat-form-field>
+        <mat-form-field class="w-80" appearance="fill">
+          <mat-label>Linkedin</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder=""
+            formControlName="linkedin"
+            value=""
+          />
+        </mat-form-field>
+      </div>
+      <div class="flex flex-col mr-8">
+        <mat-form-field class="w-80" appearance="fill">
+          <mat-label>Gihtub</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder=""
+            formControlName="github"
+            value=""
+          />
+        </mat-form-field>
+        <mat-form-field class="w-80" appearance="fill">
+          <mat-label>Portfolio</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder=""
+            formControlName="portfolio"
+            value=""
+          />
+        </mat-form-field>
+        <mat-form-field class="w-80" appearance="fill">
+          <mat-label>Other</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder=""
+            formControlName="other"
+            value=""
+          />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="flex justify-center">
+      <button mat-raised-button color="accent" class="w-32 h-12">ADD</button>
+    </div>
+  </form>
+</div>
