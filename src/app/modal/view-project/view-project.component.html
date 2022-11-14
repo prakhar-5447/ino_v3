@@ -1,1 +1,28 @@
-<p>view-project works!</p>
+<div class="p-8 bg-white flex drop-shadow-2xl">
+  <div class="">
+    <div>
+      <img
+        class="rounded-xl w-[20rem] drop-shadow-lg"
+        src="/assets/images/user/Anime-Wallpaper-Desktop-Background-50.jpg"
+        alt=""
+      />
+    </div>
+    <div class="mt-4 w-full flex flex-col">
+      <span>{{ title }}</span>
+      <a class="text-sm" href="{{ link }}" target="_blank">{{ link }}</a>
+      <span class="font-medium mt-2">Technology Used</span>
+      <div class="flex flex-wrap w-[20rem] justify-between">
+        <span
+          *ngFor="let i of tech"
+          class="rounded-2xl text-sm bg-gray-dark/[0.3] px-2 mt-1"
+          >{{ i }}</span
+        >
+      </div>
+    </div>
+  </div>
+  <div class="ml-8 text-justify w-[25rem]">
+    <p class="w-full text-sm">
+      {{ descripion }}
+    </p>
+  </div>
+</div>
