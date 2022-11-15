@@ -24,6 +24,7 @@ import { FollowedComponent } from './component/followed/followed.component';
 import { AddProjectComponent } from './modal/add-project/add-project.component';
 import { ViewProjectComponent } from './modal/view-project/view-project.component';
 import { ViewSocialsComponent } from './modal/view-socials/view-socials.component';
+import { ViewComponent } from './component/view/view.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { ViewSocialsComponent } from './modal/view-socials/view-socials.componen
     AddProjectComponent,
     ViewProjectComponent,
     ViewSocialsComponent,
+    ViewComponent,
   ],
   imports: [
     BrowserModule,

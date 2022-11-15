@@ -1,0 +1,67 @@
+<div class="flex justify-center items-center h-screen">
+  <div
+    class="flex items-center justify-center flex-col border-r border-gray-dark/[0.5] px-16 h-full"
+  >
+    <div class="flex items-center justify-center flex-col">
+      <div class="relative">
+        <button
+          (click)="follow_toogle()"
+          class="absolute bottom-0 right-0 bg-white rounded-full p-2"
+        >
+          <img
+            *ngIf="follow; else unfollow"
+            class="w-6"
+            src="/assets/images/view/friend.png"
+            alt=""
+          />
+          <ng-template #unfollow>
+            <img class="w-6" src="/assets/images/view/not_friend.png" alt="" />
+          </ng-template>
+        </button>
+        <img
+          class="w-36 h-36 rounded-full"
+          src="assets/images/user/Anime-Wallpaper-Desktop-Background-50.jpg"
+          alt="no_image"
+        />
+      </div>
+      <div class="flex drop-shadow-xl justify-between w-[15rem] mt-4">
+        <button *ngFor="let i of socials">
+          <div
+            (click)="open_url(i)"
+            class="bg-black w-8 h-8 rounded-full"
+          ></div>
+          <!-- <img
+                class="rounded-full"
+                src=""
+                alt="no_image"
+              /> -->
+        </button>
+      </div>
+    </div>
+    <div class="mt-4 flex flex-col items-center">
+      <span class="text-2xl leading-6 uppercase font-bold">{{ name }}</span>
+      <code class="text-lg leading-6">{{ phone_no }}</code>
+      <code class="text-md text-gray-dark leading-6">{{ email }}</code>
+      <p
+        class="bg-gray-light/[0.7] p-4 rounded-lg drop-shadow-xl text-lg leading-5 text-justify capitalize w-[25rem] mt-4"
+      >
+        {{ description }}
+      </p>
+    </div>
+  </div>
+  <div class="h-full overflow-auto">
+    <div class="grid grid-cols-4 gap-5 pl-4">
+      <button
+        *ngFor="let i of project"
+        class="hover:drop-shadow-2xl w-44 cursor-pointer my-2"
+        (click)="openDialog()"
+      >
+        <img
+          class="w-full rounded-md opacity-50 hover:opacity-100 transition duration-400 ease-in-out"
+          src="/assets/images/user/Anime-Wallpaper-Desktop-Background-50.jpg"
+          alt=""
+        />
+      </button>
+    </div>
+  </div>
+</div>
