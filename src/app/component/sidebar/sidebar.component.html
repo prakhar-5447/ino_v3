@@ -1,27 +1,14 @@
 <div class="flex drop-shadow-xl">
-  <nav class="">
-    <ul class="flex flex-col bg-black h-screen jusitfy-center pt-10">
-      <li
-        class="px-16 py-4 text-white text-lg font-medium hover:bg-white hover:text-black cursor-pointer transition ease-in-out duration-100"
-      >
-        <a routerLink="/" class="">HOME</a>
-      </li>
-      <li
-        class="px-16 py-4 text-white text-lg font-medium hover:bg-white hover:text-black cursor-pointer transition ease-in-out duration-100"
-      >
-        <a routerLink="/" class="">FOLLOWED</a>
-      </li>
-      <li
-        class="px-16 py-4 text-white text-lg font-medium hover:bg-white hover:text-black cursor-pointer transition ease-in-out duration-100"
-      >
-        <a routerLink="/" class="">EXPLORE</a>
-      </li>
-      <li
-        class="px-16 py-4 text-white text-lg font-medium hover:bg-white hover:text-black cursor-pointer transition ease-in-out duration-100"
-      >
-        <a routerLink="/" class="">SETTING</a>
-      </li>
-    </ul>
-  </nav>
+  <div class="absolute left-5 top-5 flex flex-col bg-white drop-shadow-md">
+    <button (click)="openDialog_followed()" mat-icon-button>
+      <mat-icon>bookmark_border</mat-icon>
+    </button>
+    <button (click)="openDialog_search()" mat-icon-button>
+      <mat-icon>search</mat-icon>
+    </button>
+    <button (click)="openDialog_setting()" mat-icon-button>
+      <mat-icon>settings</mat-icon>
+    </button>
+  </div>
   <router-outlet></router-outlet>
 </div>

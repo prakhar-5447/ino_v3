@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AddProjectComponent } from 'src/app/modal/add-project/add-project.component';
 import { Dialog } from '@angular/cdk/dialog';
 import { ViewProjectComponent } from 'src/app/modal/view-project/view-project.component';
+import { ViewSocialsComponent } from 'src/app/modal/view-socials/view-socials.component';
 
 @Component({
   selector: 'app-user',
@@ -13,7 +14,7 @@ export class UserComponent implements OnInit {
   phone_no!: String;
   email!: String;
   description!: String;
-  project!: any[];
+  project: any[] = [1, 2, 3, , 5, 6, 7, 8, 9, 10];
   socials = [1, 2, 3, 4, 5, 6];
 
   constructor(public dialog: Dialog) {
@@ -25,10 +26,16 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
   create_new() {
     this.dialog.open(AddProjectComponent);
   }
+
   openDialog() {
     this.dialog.open(ViewProjectComponent);
+  }
+
+  view_socials() {
+    this.dialog.open(ViewSocialsComponent);
   }
 }

@@ -1,1 +1,16 @@
-<p>search works!</p>
+<div class="bg-white px-2">
+  <form class="example-form">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Search</mat-label>
+      <input
+        type="text"
+        matInput
+        [formControl]="search_user"
+        placeholder="You can use username only"
+      />
+    </mat-form-field>
+  </form>
+  <div>
+    <div *ngFor="let i of filter_list">{{ i }}</div>
+  </div>
+</div>

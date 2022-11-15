@@ -1,18 +1,20 @@
-<div class="p-4 w-[55rem] h-[40rem] bg-white grid grid-cols-3 gap-2">
-  <div *ngFor="let i of index" class="group w-[15rem] text-base">
-    <a
-      routerLink="/project"
-      class="py-4 bg-white drop-shadow-xl flex items-center justify-between px-4"
-    >
-      <img
-        class="w-8 h-8 rounded-full"
-        src="/assets/images/user/Anime-Wallpaper-Desktop-Background-50.jpg"
-        alt=""
-      />
-      <p>Prakhar Sahu</p>
-      <span class="font-base text-gray/[0.5] group-hover:text-gray-dark"
-        >View</span
+<div class="w-[55rem] h-[40rem] bg-white">
+  <div class="p-4 overflow-auto grid grid-cols-3 gap-4">
+    <div *ngFor="let i of index" class="group w-[15rem] text-base">
+      <a
+        routerLink="/project"
+        class="py-4 bg-white drop-shadow-xl flex items-center justify-between px-4"
       >
-    </a>
+        <img
+          class="w-8 h-8 rounded-full"
+          src="/assets/images/user/Anime-Wallpaper-Desktop-Background-50.jpg"
+          alt=""
+        />
+        <p>Prakhar Sahu</p>
+        <span class="font-base text-gray/[0.5] group-hover:text-gray-dark"
+          >View</span
+        >
+      </a>
+    </div>
   </div>
 </div>
