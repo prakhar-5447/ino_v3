@@ -200,3 +200,24 @@ def projectApi(request, userId=0, id=0):
         projeData = Project.objects.filter(Id=id)
         projeData.delete()
         return JsonResponse("Deleted Sucessfully", safe=False)
+
+
+# def settings(request, pk):
+#     # query for the UserSettings object
+#     instance = get_object_or_404(UserSettings.objects.all(), pk=pk)
+
+#     if request.method == 'PUT':
+#         request.data['user'] = user.id
+
+#         # pass in the instance we want to update
+#         serializer = UserSettingsSerializer(instance, data=request.data)
+
+#         # validate and update
+#         if serializer.is_valid():
+#             serializer.save()
+#             serializer_dict = serializer.data
+#             serializer_dict["message"] = "Settings updated successfully."
+#             return Response(serializer_dict, status=status.HTTP_200_OK)
+#         else:
+#             return Response(serializer.errors,
+#                             status=status.HTTP_400_BAD_REQUEST)
