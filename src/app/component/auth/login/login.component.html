@@ -32,8 +32,8 @@
   >
     <div class="">
       <form
-        (ngSubmit)="create_account()"
-        [formGroup]="login"
+        (ngSubmit)="continue()"
+        [formGroup]="loginForm"
         class="flex flex-col items-center"
       >
         <mat-form-field class="w-80" appearance="fill">
@@ -59,6 +59,7 @@
           type="submit"
           mat-raised-button
           color="accent"
+          [disabled]="loginForm.invalid"
           class="w-32 h-12"
         >
           Submit

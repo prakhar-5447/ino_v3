@@ -33,7 +33,7 @@
     <div>
       <form
         (ngSubmit)="create_account()"
-        [formGroup]="signup"
+        [formGroup]="signupForm"
         class="flex flex-col items-center"
       >
         <label
@@ -42,13 +42,29 @@
         >
           <p>Select Image</p>
         </label>
-        <input type="file" id="file-upload" class="hidden" />
+        <input
+          #fileInput
+          id="file-upload"
+          class="hidden"
+          type="file"
+          name="file"
+          accept="image/png, image/jpeg"
+        />
         <mat-form-field class="w-80" appearance="fill">
           <mat-label>Name</mat-label>
           <input
             matInput
             placeholder="Enter your name"
             formControlName="name"
+            value=""
+          />
+        </mat-form-field>
+        <mat-form-field class="w-80" appearance="fill">
+          <mat-label>Username</mat-label>
+          <input
+            matInput
+            placeholder="Enter your username"
+            formControlName="username"
             value=""
           />
         </mat-form-field>
@@ -75,6 +91,7 @@
           <mat-label>Phone No.</mat-label>
           <input
             matInput
+            (keypress)="numberOnly($event)"
             placeholder="Enter 10-digit phone number"
             formControlName="phone_no"
             value=""
@@ -84,6 +101,7 @@
           type="submit"
           mat-raised-button
           color="accent"
+          [disabled]="signupForm.invalid"
           class="w-32 h-12"
         >
           Submit
