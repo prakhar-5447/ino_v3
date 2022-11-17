@@ -21,6 +21,7 @@ class Signup(models.Model):
     Email = models.CharField(max_length=50)
     Password = models.CharField(max_length=16)
     Description = models.CharField(max_length=100)
+    Phone_no = models.CharField(max_length=15)
 
 
 class Login(models.Model):
@@ -30,6 +31,7 @@ class Login(models.Model):
     Avatar = models.CharField(max_length=50)
     Email = models.CharField(max_length=50)
     Description = models.CharField(max_length=100)
+    Phone_no = models.CharField(max_length=15)
 
 
 class Social(models.Model):

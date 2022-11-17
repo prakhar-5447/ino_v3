@@ -6,13 +6,13 @@ class SignupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Signup
         fields = ("Id", "Name", "Username", "Avatar",
-                  "Email", "Password", "Description")
+                  "Email", "Password", "Description","Phone_no")
 
 
 class LoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = Login
-        fields = ("Id", "Name", "Username", "Avatar", "Email", "Description")
+        fields = ("Id", "Name", "Username", "Avatar", "Email", "Description","Phone_no")
 
 
 class SocialSerializer(serializers.ModelSerializer):
