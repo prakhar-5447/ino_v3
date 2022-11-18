@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { signup } from '../model/signup';
 import { login } from '../model/login';
+import { user } from '../model/user';
 
 @Injectable({
   providedIn: 'root',
@@ -61,7 +62,7 @@ export class AuthService {
 
   getuserId(userid: String) {
     const header = new HttpHeaders().set('content-Type', 'application/json');
-    return this.http.get<any>(this.BaseUrl + 'userId/' + userid, {
+    return this.http.get<user>(this.BaseUrl + 'userId/' + userid, {
       headers: header,
     });
   }
