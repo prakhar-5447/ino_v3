@@ -1,5 +1,5 @@
 <div class="bg-white py-8">
-  <form (ngSubmit)="send()" [formGroup]="social" class="flex flex-col">
+  <form (ngSubmit)="send()" [formGroup]="socialForm" class="flex flex-col">
     <div class="w-full flex justify-center p-8">
       <div class="flex flex-col mr-8">
         <mat-form-field class="w-80" appearance="fill">
@@ -67,7 +67,14 @@
       </div>
     </div>
     <div class="flex justify-center">
-      <button mat-raised-button color="accent" class="w-32 h-12">ADD</button>
+      <button
+        mat-raised-button
+        [disabled]="socialForm.invalid"
+        color="accent"
+        class="w-32 h-12"
+      >
+        ADD
+      </button>
     </div>
   </form>
 </div>

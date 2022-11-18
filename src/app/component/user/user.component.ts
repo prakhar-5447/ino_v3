@@ -3,6 +3,8 @@ import { AddProjectComponent } from 'src/app/modal/add-project/add-project.compo
 import { Dialog } from '@angular/cdk/dialog';
 import { ViewProjectComponent } from 'src/app/modal/view-project/view-project.component';
 import { ViewSocialsComponent } from 'src/app/modal/view-socials/view-socials.component';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-user',
@@ -14,15 +16,28 @@ export class UserComponent implements OnInit {
   phone_no!: String;
   email!: String;
   description!: String;
+  avatar!: String;
   project: any[] = [1, 2, 3, , 5, 6, 7, 8, 9, 10];
   socials = [1, 2, 3, 4, 5, 6];
 
-  constructor(public dialog: Dialog) {
-    this.name = 'pratham sahu';
-    this.phone_no = '+91 8349378115';
-    this.email = 'sahupratham022003@gmail.com';
-    this.description =
-      'jdlkasjd sdjasldj askdjaskldj sjdkj sjdksjd asjdksj skjdakasjdsaad sakd sajdksajsa d d skajd k akjdk jk lk k j k jfkjfkf dkj kfjkdfj kjfkdjf akdfjaldja adjaksdj ad askdjakslj aada skdjaslk adjaksdjalkjd adaksjda sd adajdlajd a kjsdlajs asjldaj saskdjalksjd aaa sdkjaldja  askdjaljdas kdjalsdja d asdjlkasjdlkasa dasjdlkaj sd akdjald asjd kasjd asd aksjdlaksdas dalsjdlaksjdas dad jaslkd s adkasjdlkasjd ajdas jd alsjdalskd kdjlas ds dsl d lsj dlksajad s dksajadlkajds  sdjasldj asakdsa dsjaldkjsada sda sldjaslkdja sdas d asdkjalskjdaksl d asa dklasjdkljddjalksjd aa dlajdlkasjdkasjd lkasja sda ';
+  constructor(
+    public dialog: Dialog,
+    private router: Router,
+    private auth: AuthService
+  ) {
+    const data = this.auth.checkAuth();
+    if (!data.success) {
+      this.router.navigateByUrl('/login');
+    }
+    this.auth.getuserId(data.userId).subscribe((Response: any) => {
+      if (Response.success) {
+        this.name = Response.msg['Name'];
+        this.phone_no = Response.msg['Phone_no'];
+        this.email = Response.msg['Email'];
+        this.description = Response.msg['Description'];
+        this.avatar = Response.msg['Avatar'];
+      }
+    });
   }
 
   ngOnInit(): void {}
