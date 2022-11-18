@@ -39,10 +39,8 @@ def loginApi(request):
             Email=reqData["Email"]).values()
         if UserData:
             if UserData[0]['Password'] == reqData["Password"]:
-                Login_serializer = LoginSerializer(data=UserData[0])
-                if Login_serializer.is_valid():
-                    return JsonResponse({'success': True, 'msg': Login_serializer.data["Username"]})
-                return JsonResponse({'success': False, 'msg': "Failed"})
+                Login_serializer = LoginSerializer(UserData[0])
+                return JsonResponse({'success': True, 'msg': Login_serializer.data["Username"]})
             return JsonResponse({'success': False, 'msg': "Incorrect Password"})
         else:
             return JsonResponse({'success': False, 'msg': "User not Exist"})
@@ -52,10 +50,10 @@ def loginApi(request):
 @csrf_exempt
 def userApi(request, username="", id=0):
     if request.method == "GET":
-        if(username):
+        if (username):
             UserData = Signup.objects.filter(
                 Username=username)
-        elif(id):
+        elif (id):
             UserData = Signup.objects.filter(
                 Id=id)
         if UserData:
