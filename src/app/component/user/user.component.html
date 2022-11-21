@@ -4,15 +4,76 @@
   >
     <div class="flex items-center justify-center flex-col">
       <img
+        *ngIf="avatar"
         class="w-36 h-36 rounded-full"
         src="http://127.0.0.1:8000/upload/{{ avatar }}"
         alt=""
       />
       <div
+        *ngIf="socials"
         class="flex drop-shadow-xl justify-between w-[15rem] mt-4"
-        (click)="view_socials()"
       >
-        <button *ngFor="let i of socials">
+        <a
+          *ngIf="socials.Instagram"
+          href="{{ socials.Instagram }}"
+          target="blank"
+        >
+          <div class="bg-black w-8 h-8 rounded-full"></div>
+          <!-- <img
+              class="rounded-full"
+              src=""
+              alt="no_image"
+            /> -->
+        </a>
+        <a *ngIf="socials.Twitter" href="{{ socials.Twitter }}" target="blank">
+          <div class="bg-black w-8 h-8 rounded-full"></div>
+          <!-- <img
+              class="rounded-full"
+              src=""
+              alt="no_image"
+            /> -->
+        </a>
+        <a
+          *ngIf="socials.LinkedIn"
+          href="{{ socials.LinkedIn }}"
+          target="blank"
+        >
+          <div class="bg-black w-8 h-8 rounded-full"></div>
+          <!-- <img
+              class="rounded-full"
+              src=""
+              alt="no_image"
+            /> -->
+        </a>
+        <a *ngIf="socials.Github" href="{{ socials.Github }}" target="blank">
+          <div class="bg-black w-8 h-8 rounded-full"></div>
+          <!-- <img
+              class="rounded-full"
+              src=""
+              alt="no_image"
+            /> -->
+        </a>
+        <a
+          *ngIf="socials.Portfolio"
+          href="{{ socials.Portfolio }}"
+          target="blank"
+        >
+          <div class="bg-black w-8 h-8 rounded-full"></div>
+          <!-- <img
+              class="rounded-full"
+              src=""
+              alt="no_image"
+            /> -->
+        </a>
+        <a *ngIf="socials.Other" href="{{ socials.Other }}" target="blank">
+          <div class="bg-black w-8 h-8 rounded-full"></div>
+          <!-- <img
+              class="rounded-full"
+              src=""
+              alt="no_image"
+            /> -->
+        </a>
+        <button (click)="view_socials()">
           <div class="bg-black w-8 h-8 rounded-full"></div>
           <!-- <img
               class="rounded-full"
@@ -46,13 +107,13 @@
         </div>
       </button>
       <button
-        *ngFor="let i of project"
+        *ngFor="let i of projectInfo; let index = index"
         class="hover:drop-shadow-2xl w-44 cursor-pointer my-2"
-        (click)="openDialog()"
+        (click)="openDialog(index)"
       >
         <img
           class="w-full rounded-md opacity-50 hover:opacity-100 transition duration-400 ease-in-out"
-          src="/assets/images/user/Anime-Wallpaper-Desktop-Background-50.jpg"
+          src="http://127.0.0.1:8000/upload/{{ i.ProjectImage }}"
           alt=""
         />
       </button>

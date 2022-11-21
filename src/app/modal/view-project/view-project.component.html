@@ -3,26 +3,32 @@
     <div>
       <img
         class="rounded-xl w-[20rem] drop-shadow-lg"
-        src="/assets/images/user/Anime-Wallpaper-Desktop-Background-50.jpg"
+        src="http://127.0.0.1:8000/upload/{{ projectData.ProjectImage }}"
         alt=""
       />
     </div>
     <div class="mt-4 w-full flex flex-col">
-      <span>{{ title }}</span>
-      <a class="text-sm" href="{{ link }}" target="_blank">{{ link }}</a>
+      <span>{{ projectData.Title }}</span>
+      <a class="text-sm" href="{{ projectData.Url }}" target="_blank">{{
+        projectData.Url
+      }}</a>
       <span class="font-medium mt-2">Technology Used</span>
       <div class="flex flex-wrap w-[20rem] justify-between">
         <span
-          *ngFor="let i of tech"
+          *ngFor="let i of projectData.Technology"
           class="rounded-2xl text-sm bg-gray-dark/[0.3] px-2 mt-1"
-          >{{ i }}</span
+          >{{ i["name"] }}</span
         >
       </div>
     </div>
   </div>
   <div class="ml-8 text-justify w-[25rem]">
     <p class="w-full text-sm">
-      {{ descripion }}
+      {{ projectData.Description }}
     </p>
+    <button (click)="deleteProject(projectData.Id)" class="text-gray-light">
+      <span class="mr-2">Delete</span>
+      <mat-icon>delete</mat-icon>
+    </button>
   </div>
 </div>

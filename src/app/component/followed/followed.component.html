@@ -1,16 +1,16 @@
 <div class="w-[55rem] h-[40rem] bg-white">
   <div class="p-4 overflow-auto grid grid-cols-3 gap-4">
-    <div *ngFor="let i of index" class="group w-[15rem] text-base">
+    <div *ngFor="let i of follow" class="group w-[15rem] text-base">
       <a
         routerLink="/project"
         class="py-4 bg-white drop-shadow-xl flex items-center justify-between px-4"
       >
         <img
           class="w-8 h-8 rounded-full"
-          src="/assets/images/user/Anime-Wallpaper-Desktop-Background-50.jpg"
+          src="http://127.0.0.1:8000/upload/{{ i.Avatar }}"
           alt=""
         />
-        <p>Prakhar Sahu</p>
+        <p>{{ i.Name }}</p>
         <span class="font-base text-gray/[0.5] group-hover:text-gray-dark"
           >View</span
         >

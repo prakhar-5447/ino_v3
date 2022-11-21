@@ -1,4 +1,10 @@
+import { Dialog } from '@angular/cdk/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { project } from 'src/app/model/project';
+import { AuthService } from 'src/app/services/auth.service';
+import { ModalService } from 'src/app/services/modal.service';
+import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
   selector: 'app-view-project',
@@ -6,13 +12,30 @@ import { Component, Inject, OnInit } from '@angular/core';
   styleUrls: ['./view-project.component.css'],
 })
 export class ViewProjectComponent implements OnInit {
-  title = 'My Project';
-  descripion =
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus optio dolore exercitationem. Harum cumque dolorem hic commodi ducimus atque provident unde excepturi quam. Sequi ipsam repellendus dolor nesciunt cumque adipisci architecto rerum ipsa labore ratione similique quisquam consequatur quae deleniti praesentium, doloremque reprehenderit recusandae commodi autem quod perspiciatis optio repudiandae. Expedita rerum excepturi libero vitae quo, voluptatibus eum reiciendis beatae inventore. Consequatur fugit laborum reiciendis? Dolorem eaque tempora officiis, illum omnis ut qui! Labore, dignissimos. Voluptates quibusdam numquam doloremque sapiente doloribus adipisci ab corrupti, a ea necessitatibus error molestias sit vel nostrum odio, sunt blanditiis est amet quam earum! Quaerat.';
-  link = 'https://pratham-0094.github.io/angular-portfolio';
-  tech = ['html', 'css', 'javascript', 'react', 'angular', 'mongodb'];
+  projectData!: project;
 
-  constructor() {}
+  constructor(
+    private dialog: Dialog,
+    private router: Router,
+    private auth: AuthService,
+    private modal: ModalService,
+    private project: ProjectService
+  ) {
+    this.projectData = this.modal.getProjectDetail();
+  }
 
   ngOnInit(): void {}
+
+  deleteProject(id: any) {
+    const data = this.auth.checkAuth();
+    if (!data.success) {
+      this.router.navigateByUrl('/login');
+    }
+    this.project.deleteproject(data.userId, id).subscribe((Response: any) => {
+      if (Response.success) {
+        this.modal.deleteProject();
+        this.dialog.closeAll();
+      }
+    });
+  }
 }

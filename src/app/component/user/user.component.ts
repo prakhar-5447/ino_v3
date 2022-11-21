@@ -5,6 +5,12 @@ import { ViewProjectComponent } from 'src/app/modal/view-project/view-project.co
 import { ViewSocialsComponent } from 'src/app/modal/view-socials/view-socials.component';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { project } from 'src/app/model/project';
+import { ProjectService } from 'src/app/services/project.service';
+import { getsocial } from 'src/app/model/getsocial';
+import { UserService } from 'src/app/services/user.service';
+import { ModalService } from 'src/app/services/modal.service';
+import { FollowService } from 'src/app/services/follow.service';
 
 @Component({
   selector: 'app-user',
@@ -17,13 +23,17 @@ export class UserComponent implements OnInit {
   email!: String;
   description!: String;
   avatar!: String;
-  project: any[] = [1, 2, 3, , 5, 6, 7, 8, 9, 10];
-  socials = [1, 2, 3, 4, 5, 6];
+  projectInfo: project[] = [];
+  socials!: getsocial;
 
   constructor(
     public dialog: Dialog,
     private router: Router,
-    private auth: AuthService
+    private auth: AuthService,
+    private project: ProjectService,
+    private user: UserService,
+    private modal: ModalService,
+    private follow: FollowService
   ) {
     const data = this.auth.checkAuth();
     if (!data.success) {
@@ -38,6 +48,30 @@ export class UserComponent implements OnInit {
         this.avatar = Response.msg['Avatar'];
       }
     });
+    this.user.getsocial(data.userId).subscribe((Response: any) => {
+      if (Response.success) {
+        this.modal.setSocial(Response.msg[0]);
+        this.socials = Response.msg[0];
+      }
+    });
+    this.project.getproject(data.userId).subscribe((Response: any) => {
+      if (Response.success) {
+        this.projectInfo = Response.msg;
+        for (let i = 0; i < this.projectInfo.length; i++) {
+          this.projectInfo[i].Technology = JSON.parse(
+            this.projectInfo[i].Technology
+          );
+        }
+        this.modal.setProject(this.projectInfo);
+        this.follow.getfollow(data.userId).subscribe((Response: any) => {
+          if (Response.success) {
+            this.modal.setFollowList(Response.msg[0]['Followed']);
+          } else {
+            this.follow.follow(data.userId);
+          }
+        });
+      }
+    });
   }
 
   ngOnInit(): void {}
@@ -46,7 +80,8 @@ export class UserComponent implements OnInit {
     this.dialog.open(AddProjectComponent);
   }
 
-  openDialog() {
+  openDialog(index: any) {
+    this.modal.setIndex(index);
     this.dialog.open(ViewProjectComponent);
   }
 

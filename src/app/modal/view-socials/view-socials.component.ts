@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { ModalService } from 'src/app/services/modal.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -17,33 +18,29 @@ export class ViewSocialsComponent implements OnInit {
   constructor(
     private router: Router,
     private auth: AuthService,
-    private user: UserService
+    private user: UserService,
+    private modal: ModalService
   ) {
     const data = this.auth.checkAuth();
     if (!data.success) {
       this.router.navigateByUrl('/login');
     }
-    this.user.getsocial(data.userId).subscribe((Response: any) => {
-      console.log(Response);
-      if (Response.success) {
-        this.socialForm = new FormGroup({
-          instagram: new FormControl(Response.msg[0]['Instagram'], []),
-          twitter: new FormControl(Response.msg[0]['LinkedIn'], []),
-          linkedin: new FormControl(Response.msg[0]['Twitter'], []),
-          github: new FormControl(Response.msg[0]['Github'], []),
-          portfolio: new FormControl(Response.msg[0]['Portfolio'], []),
-          other: new FormControl(Response.msg[0]['Other'], []),
-        });
-      } else {
-        this.socialForm = new FormGroup({
-          instagram: new FormControl('', []),
-          twitter: new FormControl('', []),
-          linkedin: new FormControl('', []),
-          github: new FormControl('', []),
-          portfolio: new FormControl('', []),
-          other: new FormControl('', []),
-        });
-      }
+    this.socialForm = new FormGroup({
+      instagram: new FormControl('', []),
+      twitter: new FormControl('', []),
+      linkedin: new FormControl('', []),
+      github: new FormControl('', []),
+      portfolio: new FormControl('', []),
+      other: new FormControl('', []),
+    });
+    const socialData = this.modal.getSocial();
+    this.socialForm = new FormGroup({
+      instagram: new FormControl(socialData['Instagram'], []),
+      twitter: new FormControl(socialData['LinkedIn'], []),
+      linkedin: new FormControl(socialData['Twitter'], []),
+      github: new FormControl(socialData['Github'], []),
+      portfolio: new FormControl(socialData['Portfolio'], []),
+      other: new FormControl(socialData['Other'], []),
     });
   }
 
@@ -66,7 +63,16 @@ export class ViewSocialsComponent implements OnInit {
             Portfolio: this.socialForm.value['portfolio'],
             Other: this.socialForm.value['other'],
           };
-          this.user.changesocial(this.socialInfo, data.userId);
+          this.user
+            .changesocial(this.socialInfo, data.userId)
+            .subscribe((Response: any) => {
+              if (Response.success) {
+                alert('Successfully Updated');
+                this.modal.setSocial(this.socialInfo);
+              } else {
+                alert(Response.msg);
+              }
+            });
         } else {
           this.socialInfo = {
             Username: data.userId,
@@ -77,7 +83,14 @@ export class ViewSocialsComponent implements OnInit {
             Portfolio: this.socialForm.value['portfolio'],
             Other: this.socialForm.value['other'],
           };
-          this.user.addsocial(this.socialInfo);
+          this.user.addsocial(this.socialInfo).subscribe((Response: any) => {
+            if (Response.success) {
+              alert('Successfully Added');
+              this.modal.setSocial(this.socialInfo);
+            } else {
+              alert(Response.msg);
+            }
+          });
         }
       });
     }
