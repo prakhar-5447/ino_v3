@@ -197,7 +197,7 @@ def projectApi(request, userId=0, id=0):
             return JsonResponse({'success': False, 'msg': "Project Not Belong to the User"})
         projeData = Project.objects.filter(Id=id)
         projeData.delete()
-        return JsonResponse("Deleted Sucessfully", safe=False)
+        return JsonResponse({'success': True, 'msg': "Deleted Sucessfully"})
 
 
 # def settings(request, pk):

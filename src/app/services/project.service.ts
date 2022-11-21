@@ -1,36 +1,38 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { addsocial } from '../model/addsocial';
-import { getsocial } from '../model/getsocial';
-import { changesocial } from '../model/changesocial';
+import { project } from '../model/project';
+import { addproject } from '../model/addproject';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UserService {
+export class ProjectService {
   BaseUrl: String = 'http://localhost:8000/';
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  addsocial(link: addsocial) {
+  addproject(project: addproject) {
     const header = new HttpHeaders().set('content-Type', 'application/json');
-    return this.http.post(this.BaseUrl + 'social', link, {
+    return this.http.post(this.BaseUrl + 'project', project, {
       headers: header,
     });
   }
 
-  getsocial(userid: String) {
+  getproject(userid: String) {
     const header = new HttpHeaders().set('content-Type', 'application/json');
-    return this.http.get<getsocial>(this.BaseUrl + 'social/' + userid, {
+    return this.http.get<project>(this.BaseUrl + 'project/' + userid, {
       headers: header,
     });
   }
 
-  changesocial(socialData: changesocial, userid: String) {
+  deleteproject(userid: String, id: String) {
     const header = new HttpHeaders().set('content-Type', 'application/json');
-    return this.http.put(this.BaseUrl + 'social/' + userid, socialData, {
-      headers: header,
-    });
+    return this.http.delete(
+      this.BaseUrl + 'project/' + userid + '/' + id,
+      {
+        headers: header,
+      }
+    );
   }
 }
