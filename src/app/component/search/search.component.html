@@ -1,16 +1,36 @@
-<div class="bg-white px-2">
-  <form class="example-form">
-    <mat-form-field class="example-full-width" appearance="fill">
+<div class="bg-white">
+  <form (ngSubmit)="search()" [formGroup]="searchForm" class="example-form mx-2 mt-2">
+    <mat-form-field class="example-full-width mr-4" appearance="fill">
       <mat-label>Search</mat-label>
       <input
         type="text"
         matInput
-        [formControl]="search_user"
+        formControlName="searchuser"
         placeholder="You can use username only"
       />
     </mat-form-field>
+    <button mat-raised-button type="submit" color="accent" class="w-32 h-12">
+      SEARCH
+    </button>
   </form>
   <div>
-    <div *ngFor="let i of filter_list">{{ i }}</div>
+    <div *ngFor="let i of userArray" class="group text-base">
+      <div
+        class="py-4 bg-white  group-hover:bg-gray-light drop-shadow-xl flex items-center justify-between px-4"
+      >
+        <img
+          class="w-8 h-8 rounded-full"
+          src="http://127.0.0.1:8000/upload/{{ i.Avatar }}"
+          alt=""
+        />
+        <p>{{ i.Name }}</p>
+        <button
+          (click)="view(i.Id)"
+          class="font-base text-gray/[0.5] group-hover:text-gray-dark"
+        >
+          View
+        </button>
+      </div>
+    </div>
   </div>
 </div>
