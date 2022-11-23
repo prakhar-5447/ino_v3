@@ -34,4 +34,18 @@ export class FollowService {
       headers: header,
     });
   }
+
+  searchname(name: String) {
+    const header = new HttpHeaders().set('content-Type', 'application/json');
+    return this.http.get(this.BaseUrl + 'name/' + name, {
+      headers: header,
+    });
+  }
+
+  searchusername(username: String) {
+    const header = new HttpHeaders().set('content-Type', 'application/json');
+    return this.http.get(this.BaseUrl + 'username/' + username, {
+      headers: header,
+    });
+  }
 }
