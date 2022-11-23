@@ -19,4 +19,6 @@ urlpatterns = [
     url(r'^project$', views.projectApi),
     path('project/<str:userId>', views.projectApi),
     path('project/<str:userId>/<str:id>', views.projectApi),
+    path('username/<str:username>', views.searchByUsernameApi),
+    path('name/<str:name>', views.searchByNameApi),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

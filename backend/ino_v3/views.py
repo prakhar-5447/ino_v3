@@ -200,6 +200,23 @@ def projectApi(request, userId=0, id=0):
         return JsonResponse({'success': True, 'msg': "Deleted Sucessfully"})
 
 
+@csrf_exempt
+def searchByUsernameApi(request, username=''):
+    if request.method == "GET":
+        allUser = Signup.objects.filter(Username__contains=username)
+        user_serializer = LoginSerializer(allUser, many=True)
+        userData = user_serializer.data
+        return JsonResponse({'success': True, 'msg': userData})
+
+
+@csrf_exempt
+def searchByNameApi(request, name=''):
+    if request.method == "GET":
+        allUser = Signup.objects.filter(Name__contains=name)
+        user_serializer = LoginSerializer(allUser, many=True)
+        userData = user_serializer.data
+        return JsonResponse({'success': True, 'msg': userData})
+
 # def settings(request, pk):
 #     # query for the UserSettings object
 #     instance = get_object_or_404(UserSettings.objects.all(), pk=pk)
