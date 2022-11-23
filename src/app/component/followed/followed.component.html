@@ -1,8 +1,7 @@
 <div class="w-[55rem] h-[40rem] bg-white">
   <div class="p-4 overflow-auto grid grid-cols-3 gap-4">
     <div *ngFor="let i of follow" class="group w-[15rem] text-base">
-      <a
-        routerLink="/project"
+      <div
         class="py-4 bg-white drop-shadow-xl flex items-center justify-between px-4"
       >
         <img
@@ -11,10 +10,13 @@
           alt=""
         />
         <p>{{ i.Name }}</p>
-        <span class="font-base text-gray/[0.5] group-hover:text-gray-dark"
-          >View</span
+        <button
+          (click)="view(i.Id)"
+          class="font-base text-gray/[0.5] group-hover:text-gray-dark"
         >
-      </a>
+          View
+        </button>
+      </div>
     </div>
   </div>
 </div>
