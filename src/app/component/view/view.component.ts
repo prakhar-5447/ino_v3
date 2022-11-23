@@ -1,6 +1,14 @@
 import { Dialog } from '@angular/cdk/dialog';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ViewProjectComponent } from 'src/app/modal/view-project/view-project.component';
+import { getsocial } from 'src/app/model/getsocial';
+import { project } from 'src/app/model/project';
+import { AuthService } from 'src/app/services/auth.service';
+import { FollowService } from 'src/app/services/follow.service';
+import { ModalService } from 'src/app/services/modal.service';
+import { ProjectService } from 'src/app/services/project.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-view',
@@ -8,32 +16,125 @@ import { ViewProjectComponent } from 'src/app/modal/view-project/view-project.co
   styleUrls: ['./view.component.css'],
 })
 export class ViewComponent implements OnInit {
-  follow: Boolean = false;
+  following!: Boolean;
+  id!: String;
   name!: String;
   phone_no!: String;
   email!: String;
   description!: String;
-  project: any[] = [1, 2, 3, , 5, 6, 7, 8, 9, 10];
-  socials = [1, 2, 3, 4, 5, 6];
+  avatar!: String;
+  userid!: String;
+  projectInfo: project[] = [];
+  socials!: getsocial;
+  followed: any = [];
 
-  constructor(public dialog: Dialog) {
-    this.name = 'pratham sahu';
-    this.phone_no = '+91 8349378115';
-    this.email = 'sahupratham022003@gmail.com';
-    this.description =
-      'jdlkasjd sdjasldj askdjaskldj sjdkj sjdksjd asjdksj skjdakasjdsaad sakd sajdksajsa d d skajd k akjdk jk lk k j k jfkjfkf dkj kfjkdfj kjfkdjf akdfjaldja adjaksdj ad askdjakslj aada skdjaslk adjaksdjalkjd adaksjda sd adajdlajd a kjsdlajs asjldaj saskdjalksjd aaa sdkjaldja  askdjaljdas kdjalsdja d asdjlkasjdlkasa dasjdlkaj sd akdjald asjd kasjd asd aksjdlaksdas dalsjdlaksjdas dad jaslkd s adkasjdlkasjd ajdas jd alsjdalskd kdjlas ds dsl d lsj dlksajad s dksajadlkajds  sdjasldj asakdsa dsjaldkjsada sda sldjaslkdja sdas d asdkjalskjdaksl d asa dklasjdkljddjalksjd aa dlajdlkasjdkasjd lkasja sda ';
+  constructor(
+    public dialog: Dialog,
+    private router: Router,
+    private route: ActivatedRoute,
+    private auth: AuthService,
+    private project: ProjectService,
+    private user: UserService,
+    private modal: ModalService,
+    private follow: FollowService
+  ) {
+    const data = this.auth.checkAuth();
+    if (!data.success) {
+      this.router.navigateByUrl('/login');
+    }
+    this.follow.getfollow(data.userId).subscribe((Response: any) => {
+      if (Response.success) {
+        this.modal.setFollowList(Response.msg[0]['Followed']);
+      } else {
+        this.follow.follow(data.userId);
+      }
+    });
+    this.followed = this.modal.getFollowList();
+    this.route.params.subscribe((params) => {
+      this.userid = params['id'];
+      this.auth.getuserId(this.userid).subscribe((Response: any) => {
+        if (Response.success) {
+          this.id = Response.msg['Id'];
+          this.name = Response.msg['Name'];
+          this.phone_no = Response.msg['Phone_no'];
+          this.email = Response.msg['Email'];
+          this.description = Response.msg['Description'];
+          this.avatar = Response.msg['Avatar'];
+        }
+      });
+      this.user.getsocial(this.userid).subscribe((Response: any) => {
+        if (Response.success) {
+          this.socials = Response.msg[0];
+        }
+      });
+      this.project.getproject(this.userid).subscribe((Response: any) => {
+        if (Response.success) {
+          this.projectInfo = Response.msg;
+          for (let i = 0; i < this.projectInfo.length; i++) {
+            this.projectInfo[i].Technology = JSON.parse(
+              this.projectInfo[i].Technology
+            );
+          }
+        }
+      });
+    });
+    this.following = false;
+    for (let i = 0; i < this.followed.length; i++) {
+      if (this.followed[i]['id'] == this.id) {
+        this.following = true;
+        break;
+      }
+    }
   }
 
-  openDialog() {
+  openDialog(index: any) {
+    this.modal.setIndex(index);
     this.dialog.open(ViewProjectComponent);
   }
 
-  open_url(i: any) {
-    console.log(i);
-  }
-
   follow_toogle() {
-    this.follow = !this.follow;
+    const data = this.auth.checkAuth();
+    if (!data.success) {
+      this.router.navigateByUrl('/login');
+    }
+    if (this.following) {
+      const newFollorList = this.followed;
+      let index = newFollorList.findIndex((id: any) => id['id'] == data.userId);
+      newFollorList.splice(index, 1);
+      let newData = { Id: this.modal.getId(), Followed: newFollorList };
+      this.follow
+        .changefollow(newData, data.userId)
+        .subscribe((Response: any) => {
+          if (Response.success) {
+            this.following = !this.following;
+            this.modal.setFollowList(newFollorList);
+            for (let i = 0; i < this.followed.length; i++) {
+              if (this.followed[i]['id'] == this.id) {
+                this.following = true;
+                break;
+              }
+            }
+          }
+        });
+    } else {
+      const newFollorList = this.followed;
+      newFollorList.push({ id: data.userId });
+      let newData = { Id: this.modal.getId(), Followed: newFollorList };
+      this.follow
+        .changefollow(newData, data.userId)
+        .subscribe((Response: any) => {
+          if (Response.success) {
+            this.following = !this.following;
+            this.modal.setFollowList(newFollorList);
+            for (let i = 0; i < this.followed.length; i++) {
+              if (this.followed[i]['id'] == this.id) {
+                this.following = true;
+                break;
+              }
+            }
+          }
+        });
+    }
   }
 
   ngOnInit(): void {}

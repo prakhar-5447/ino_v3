@@ -3,13 +3,13 @@
     class="flex items-center justify-center flex-col border-r border-gray-dark/[0.5] px-16 h-full"
   >
     <div class="flex items-center justify-center flex-col">
-      <div class="relative">
+      <div class="relative flex items-center justify-center">
         <button
           (click)="follow_toogle()"
           class="absolute bottom-0 right-0 bg-white rounded-full p-2"
         >
           <img
-            *ngIf="follow; else unfollow"
+            *ngIf="following; else unfollow"
             class="w-6"
             src="/assets/images/view/friend.png"
             alt=""
@@ -19,49 +19,114 @@
           </ng-template>
         </button>
         <img
+          *ngIf="avatar"
           class="w-36 h-36 rounded-full"
-          src="assets/images/user/Anime-Wallpaper-Desktop-Background-50.jpg"
-          alt="no_image"
+          src="http://127.0.0.1:8000/upload/{{ avatar }}"
+          alt=""
         />
       </div>
       <div class="flex drop-shadow-xl justify-between w-[15rem] mt-4">
-        <button *ngFor="let i of socials">
-          <div
-            (click)="open_url(i)"
-            class="bg-black w-8 h-8 rounded-full"
-          ></div>
-          <!-- <img
-                class="rounded-full"
-                src=""
+        <div
+          *ngIf="socials"
+          class="flex drop-shadow-xl justify-between w-[15rem] mt-4"
+        >
+          <a
+            *ngIf="socials.Instagram"
+            href="{{ socials.Instagram }}"
+            target="blank"
+          >
+            <div class="bg-white w-10 h-10 rounded-full">
+              <img
+                class="rounded-full p-1"
+                src="/assets/images/social/instagram.png"
                 alt="no_image"
-              /> -->
-        </button>
+              />
+            </div>
+          </a>
+          <a
+            *ngIf="socials.Twitter"
+            href="{{ socials.Twitter }}"
+            target="blank"
+          >
+            <div class="bg-white w-10 h-10 rounded-full">
+              <img
+                class="rounded-full p-1"
+                src="/assets/images/social/twitter.png"
+                alt="no_image"
+              />
+            </div>
+          </a>
+          <a
+            *ngIf="socials.LinkedIn"
+            href="{{ socials.LinkedIn }}"
+            target="blank"
+          >
+            <div class="bg-white w-10 h-10 rounded-full">
+              <img
+                class="rounded-full p-1"
+                src="/assets/images/social/linkedin.png"
+                alt="no_image"
+              />
+            </div>
+          </a>
+          <a *ngIf="socials.Github" href="{{ socials.Github }}" target="blank">
+            <div class="bg-white w-10 h-10 rounded-full">
+              <img
+                class="rounded-full p-1"
+                src="/assets/images/social/github.png"
+                alt="no_image"
+              />
+            </div>
+          </a>
+          <a
+            *ngIf="socials.Portfolio"
+            href="{{ socials.Portfolio }}"
+            target="blank"
+          >
+            <div class="bg-white w-10 h-10 rounded-full">
+              <img
+                class="rounded-full p-1"
+                src="/assets/images/social/portfolio.png"
+                alt="no_image"
+              />
+            </div>
+          </a>
+          <a *ngIf="socials.Other" href="{{ socials.Other }}" target="blank">
+            <div class="bg-white w-10 h-10 rounded-full">
+              <img
+                class="rounded-full p-1"
+                src="/assets/images/social/other.png"
+                alt="no_image"
+              />
+            </div>
+          </a>
+        </div>
       </div>
-    </div>
-    <div class="mt-4 flex flex-col items-center">
-      <span class="text-2xl leading-6 uppercase font-bold">{{ name }}</span>
-      <code class="text-lg leading-6">{{ phone_no }}</code>
-      <code class="text-md text-gray-dark leading-6">{{ email }}</code>
-      <p
-        class="bg-gray-light/[0.7] p-4 rounded-lg drop-shadow-xl text-lg leading-5 text-justify capitalize w-[25rem] mt-4"
-      >
-        {{ description }}
-      </p>
-    </div>
-  </div>
-  <div class="h-full overflow-auto">
-    <div class="grid grid-cols-4 gap-5 pl-4">
-      <button
-        *ngFor="let i of project"
-        class="hover:drop-shadow-2xl w-44 cursor-pointer my-2"
-        (click)="openDialog()"
-      >
-        <img
-          class="w-full rounded-md opacity-50 hover:opacity-100 transition duration-400 ease-in-out"
-          src="/assets/images/user/Anime-Wallpaper-Desktop-Background-50.jpg"
-          alt=""
-        />
-      </button>
+      <div class="mt-4 flex flex-col items-center">
+        <span class="text-2xl leading-6 uppercase font-bold">{{ name }}</span>
+        <code class="text-lg leading-6">{{ phone_no }}</code>
+        <code class="text-md text-gray-dark leading-6">{{ email }}</code>
+        <p
+          class="bg-gray-light/[0.7] p-4 rounded-lg drop-shadow-xl text-lg leading-5 text-justify capitalize w-[25rem] mt-4"
+        >
+          {{ description }}
+        </p>
+      </div>
+      <div class="h-full overflow-auto">
+        <div class="grid grid-cols-4 gap-5 pl-4">
+          <button
+            *ngFor="let i of projectInfo; let index = index"
+            class="hover:drop-shadow-2xl w-44 cursor-pointer my-2"
+            (click)="openDialog(index)"
+          >
+            <img
+              class="w-full rounded-md opacity-50 hover:opacity-100 transition duration-400 ease-in-out"
+              src="http://127.0.0.1:8000/upload/{{ i.ProjectImage }}"
+              alt=""
+            />
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
