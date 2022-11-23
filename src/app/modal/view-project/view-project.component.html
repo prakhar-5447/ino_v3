@@ -13,22 +13,22 @@
         projectData.Url
       }}</a>
       <span class="font-medium mt-2">Technology Used</span>
-      <div class="flex flex-wrap w-[20rem] justify-between">
+      <div class="flex flex-wrap w-[20rem]">
         <span
           *ngFor="let i of projectData.Technology"
-          class="rounded-2xl text-sm bg-gray-dark/[0.3] px-2 mt-1"
+          class="rounded-2xl text-sm m-1 bg-gray-dark/[0.3] px-2 mt-1"
           >{{ i["name"] }}</span
         >
       </div>
     </div>
   </div>
-  <div class="ml-8 text-justify w-[25rem]">
+  <div class="ml-8 text-justify flex flex-col justify-between w-[25rem]">
     <p class="w-full text-sm">
       {{ projectData.Description }}
     </p>
-    <button (click)="deleteProject(projectData.Id)" class="text-gray-light">
-      <span class="mr-2">Delete</span>
-      <mat-icon>delete</mat-icon>
+    <button class="ml-auto w-min flex" (click)="deleteProject(projectData.Id)">
+      <span class="text-gray text-lg mr-2">Delete</span>
+      <mat-icon class="text-gray/[0.8]">delete</mat-icon>
     </button>
   </div>
 </div>

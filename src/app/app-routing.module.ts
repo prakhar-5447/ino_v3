@@ -12,7 +12,7 @@ const routes: Routes = [
     component: SidebarComponent,
     children: [
       { path: '', component: UserComponent },
-      { path: 'view', component: ViewComponent },
+      { path: 'view/:id', component: ViewComponent },
     ],
   },
   {

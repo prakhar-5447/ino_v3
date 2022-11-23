@@ -11,75 +11,82 @@
       />
       <div
         *ngIf="socials"
-        class="flex drop-shadow-xl justify-between w-[15rem] mt-4"
+        class="flex drop-shadow-xl justify-between w-[18rem] mt-4"
       >
         <a
           *ngIf="socials.Instagram"
           href="{{ socials.Instagram }}"
           target="blank"
         >
-          <div class="bg-black w-8 h-8 rounded-full"></div>
-          <!-- <img
-              class="rounded-full"
-              src=""
+          <div class="bg-white w-10 h-10 rounded-full">
+            <img
+              class="rounded-full p-1"
+              src="/assets/images/social/instagram.png"
               alt="no_image"
-            /> -->
+            />
+          </div>
         </a>
         <a *ngIf="socials.Twitter" href="{{ socials.Twitter }}" target="blank">
-          <div class="bg-black w-8 h-8 rounded-full"></div>
-          <!-- <img
-              class="rounded-full"
-              src=""
+          <div class="bg-white w-10 h-10 rounded-full">
+            <img
+              class="rounded-full p-1"
+              src="/assets/images/social/twitter.png"
               alt="no_image"
-            /> -->
+            />
+          </div>
         </a>
         <a
           *ngIf="socials.LinkedIn"
           href="{{ socials.LinkedIn }}"
           target="blank"
         >
-          <div class="bg-black w-8 h-8 rounded-full"></div>
-          <!-- <img
-              class="rounded-full"
-              src=""
+          <div class="bg-white w-10 h-10 rounded-full">
+            <img
+              class="rounded-full p-1"
+              src="/assets/images/social/linkedin.png"
               alt="no_image"
-            /> -->
+            />
+          </div>
         </a>
         <a *ngIf="socials.Github" href="{{ socials.Github }}" target="blank">
-          <div class="bg-black w-8 h-8 rounded-full"></div>
-          <!-- <img
-              class="rounded-full"
-              src=""
+          <div class="bg-white w-10 h-10 rounded-full">
+            <img
+              class="rounded-full p-1"
+              src="/assets/images/social/github.png"
               alt="no_image"
-            /> -->
+            />
+          </div>
         </a>
         <a
           *ngIf="socials.Portfolio"
           href="{{ socials.Portfolio }}"
           target="blank"
         >
-          <div class="bg-black w-8 h-8 rounded-full"></div>
-          <!-- <img
-              class="rounded-full"
-              src=""
+          <div class="bg-white w-10 h-10 rounded-full">
+            <img
+              class="rounded-full p-1"
+              src="/assets/images/social/portfolio.png"
               alt="no_image"
-            /> -->
+            />
+          </div>
         </a>
         <a *ngIf="socials.Other" href="{{ socials.Other }}" target="blank">
-          <div class="bg-black w-8 h-8 rounded-full"></div>
-          <!-- <img
-              class="rounded-full"
-              src=""
+          <div class="bg-white w-10 h-10 rounded-full">
+            <img
+              class="rounded-full p-1"
+              src="/assets/images/social/other.png"
               alt="no_image"
-            /> -->
+            />
+          </div>
         </a>
         <button (click)="view_socials()">
-          <div class="bg-black w-8 h-8 rounded-full"></div>
-          <!-- <img
-              class="rounded-full"
-              src=""
+          <div class="bg-white w-10 h-10 rounded-full">
+            <img
+              class="rounded-full p-1"
+              src="/assets/images/social/edit.png"
               alt="no_image"
-            /> -->
+            />
+          </div>
         </button>
       </div>
     </div>
@@ -95,9 +102,9 @@
     </div>
   </div>
   <div class="h-full overflow-auto">
-    <div class="grid grid-cols-4 gap-5 pl-4">
+    <div *ngIf="projectInfo" class="grid grid-cols-4 gap-5 pl-4">
       <button
-        class="hover:drop-shadow-xl rounded-md bg-white w-44 cursor-pointer my-2 border-dashed border"
+        class="hover:drop-shadow-xl rounded-md bg-white w-64 h-44 cursor-pointer my-2 border-dashed border"
         (click)="create_new()"
       >
         <div

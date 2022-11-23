@@ -11,6 +11,7 @@ export class ModalService {
   socialData!: getsocial;
   index!: any;
   followList!: any;
+  id!: String;
 
   constructor(private auth: AuthService) {}
 
@@ -48,5 +49,13 @@ export class ModalService {
 
   getFollowList() {
     return this.followList;
+  }
+
+  setId(id: any) {
+    this.id = id;
+  }
+
+  getId() {
+    return this.id;
   }
 }

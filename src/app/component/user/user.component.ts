@@ -63,13 +63,14 @@ export class UserComponent implements OnInit {
           );
         }
         this.modal.setProject(this.projectInfo);
-        this.follow.getfollow(data.userId).subscribe((Response: any) => {
-          if (Response.success) {
-            this.modal.setFollowList(Response.msg[0]['Followed']);
-          } else {
-            this.follow.follow(data.userId);
-          }
-        });
+      }
+    });
+    this.follow.getfollow(data.userId).subscribe((Response: any) => {
+      if (Response.success) {
+        this.modal.setFollowList(Response.msg[0]['Followed']);
+        this.modal.setId(Response.msg[0]['Id']);
+      } else {
+        this.follow.follow(data.userId);
       }
     });
   }
