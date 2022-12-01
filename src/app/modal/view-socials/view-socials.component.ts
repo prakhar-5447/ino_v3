@@ -1,6 +1,9 @@
+import { Dialog } from '@angular/cdk/dialog';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { addsocial } from 'src/app/model/addsocial';
+import { changesocial } from 'src/app/model/changesocial';
 import { AuthService } from 'src/app/services/auth.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { UserService } from 'src/app/services/user.service';
@@ -13,9 +16,11 @@ import { UserService } from 'src/app/services/user.service';
 export class ViewSocialsComponent implements OnInit {
   socialForm!: FormGroup;
 
-  socialInfo!: any;
+  socialInfo!: changesocial;
+  addSocial!: addsocial;
 
   constructor(
+    private dialog: Dialog,
     private router: Router,
     private auth: AuthService,
     private user: UserService,
@@ -56,7 +61,8 @@ export class ViewSocialsComponent implements OnInit {
         if (Response.success) {
           this.socialInfo = {
             Id: Response.msg[0]['Id'],
-            Instagram: this.socialForm.value['instagram'],
+            Username: data.userId,
+            Instagram: this.socialForm.value['instagram'] || '',
             Twitter: this.socialForm.value['twitter'],
             LinkedIn: this.socialForm.value['linkedin'],
             Github: this.socialForm.value['github'],
@@ -69,12 +75,13 @@ export class ViewSocialsComponent implements OnInit {
               if (Response.success) {
                 alert('Successfully Updated');
                 this.modal.setSocial(this.socialInfo);
+                this.dialog.closeAll();
               } else {
                 alert(Response.msg);
               }
             });
         } else {
-          this.socialInfo = {
+          this.addSocial = {
             Username: data.userId,
             Instagram: this.socialForm.value['instagram'],
             Twitter: this.socialForm.value['twitter'],
@@ -87,6 +94,7 @@ export class ViewSocialsComponent implements OnInit {
             if (Response.success) {
               alert('Successfully Added');
               this.modal.setSocial(this.socialInfo);
+              this.dialog.closeAll();
             } else {
               alert(Response.msg);
             }
