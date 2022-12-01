@@ -1,5 +1,6 @@
 export class changesocial {
   Id!: String;
+  Username!: String;
   Instagram!: String;
   Twitter!: String;
   Github!: String;

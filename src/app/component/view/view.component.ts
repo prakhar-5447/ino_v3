@@ -26,7 +26,7 @@ export class ViewComponent implements OnInit {
   userid!: String;
   projectInfo: project[] = [];
   socials!: getsocial;
-  followed: any = [];
+  followed: any[] = [];
 
   constructor(
     public dialog: Dialog,
@@ -38,18 +38,11 @@ export class ViewComponent implements OnInit {
     private modal: ModalService,
     private follow: FollowService
   ) {
+    this.following = false;
     const data = this.auth.checkAuth();
     if (!data.success) {
       this.router.navigateByUrl('/login');
     }
-    this.follow.getfollow(data.userId).subscribe((Response: any) => {
-      if (Response.success) {
-        this.modal.setFollowList(Response.msg[0]['Followed']);
-      } else {
-        this.follow.follow(data.userId);
-      }
-    });
-    this.followed = this.modal.getFollowList();
     this.route.params.subscribe((params) => {
       this.userid = params['id'];
       this.auth.getuserId(this.userid).subscribe((Response: any) => {
@@ -62,6 +55,12 @@ export class ViewComponent implements OnInit {
           this.avatar = Response.msg['Avatar'];
         }
       });
+      this.follow
+        .checkfollow(data.userId, this.userid)
+        .subscribe((Response: any) => {
+          this.following = Response.success;
+          console.log(Response.success);
+        });
       this.user.getsocial(this.userid).subscribe((Response: any) => {
         if (Response.success) {
           this.socials = Response.msg[0];
@@ -78,13 +77,6 @@ export class ViewComponent implements OnInit {
         }
       });
     });
-    this.following = false;
-    for (let i = 0; i < this.followed.length; i++) {
-      if (this.followed[i]['id'] == this.id) {
-        this.following = true;
-        break;
-      }
-    }
   }
 
   openDialog(index: any) {
@@ -101,37 +93,50 @@ export class ViewComponent implements OnInit {
       const newFollorList = this.followed;
       let index = newFollorList.findIndex((id: any) => id['id'] == data.userId);
       newFollorList.splice(index, 1);
-      let newData = { Id: this.modal.getId(), Followed: newFollorList };
+      let newData = {
+        Id: this.modal.getId(),
+        Username: data.userId,
+        Followed: newFollorList,
+      };
       this.follow
         .changefollow(newData, data.userId)
         .subscribe((Response: any) => {
           if (Response.success) {
             this.following = !this.following;
             this.modal.setFollowList(newFollorList);
-            for (let i = 0; i < this.followed.length; i++) {
-              if (this.followed[i]['id'] == this.id) {
-                this.following = true;
-                break;
-              }
-            }
+            this.follow
+              .checkfollow(data.userId, this.userid)
+              .subscribe((Response: any) => {
+                this.following = Response.success;
+                console.log(Response.success);
+              });
+          } else {
+            alert(Response.msg);
           }
         });
     } else {
       const newFollorList = this.followed;
-      newFollorList.push({ id: data.userId });
-      let newData = { Id: this.modal.getId(), Followed: newFollorList };
+      newFollorList.push({ id: this.id });
+      let newData = {
+        Id: this.modal.getId(),
+        Username: data.userId,
+        Followed: newFollorList,
+      };
       this.follow
         .changefollow(newData, data.userId)
         .subscribe((Response: any) => {
           if (Response.success) {
             this.following = !this.following;
             this.modal.setFollowList(newFollorList);
-            for (let i = 0; i < this.followed.length; i++) {
-              if (this.followed[i]['id'] == this.id) {
-                this.following = true;
-                break;
-              }
-            }
+
+            this.follow
+              .checkfollow(data.userId, this.userid)
+              .subscribe((Response: any) => {
+                this.following = Response.success;
+                console.log(Response.success);
+              });
+          } else {
+            alert(Response.msg);
           }
         });
     }

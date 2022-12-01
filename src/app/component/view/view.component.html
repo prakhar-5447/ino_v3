@@ -25,82 +25,76 @@
           alt=""
         />
       </div>
-      <div class="flex drop-shadow-xl justify-between w-[15rem] mt-4">
-        <div
-          *ngIf="socials"
-          class="flex drop-shadow-xl justify-between w-[15rem] mt-4"
+      <div
+        *ngIf="socials"
+        class="flex drop-shadow-xl justify-between w-[18rem] mt-4"
+      >
+        <a
+          *ngIf="socials.Instagram"
+          href="{{ socials.Instagram }}"
+          target="blank"
         >
-          <a
-            *ngIf="socials.Instagram"
-            href="{{ socials.Instagram }}"
-            target="blank"
-          >
-            <div class="bg-white w-10 h-10 rounded-full">
-              <img
-                class="rounded-full p-1"
-                src="/assets/images/social/instagram.png"
-                alt="no_image"
-              />
-            </div>
-          </a>
-          <a
-            *ngIf="socials.Twitter"
-            href="{{ socials.Twitter }}"
-            target="blank"
-          >
-            <div class="bg-white w-10 h-10 rounded-full">
-              <img
-                class="rounded-full p-1"
-                src="/assets/images/social/twitter.png"
-                alt="no_image"
-              />
-            </div>
-          </a>
-          <a
-            *ngIf="socials.LinkedIn"
-            href="{{ socials.LinkedIn }}"
-            target="blank"
-          >
-            <div class="bg-white w-10 h-10 rounded-full">
-              <img
-                class="rounded-full p-1"
-                src="/assets/images/social/linkedin.png"
-                alt="no_image"
-              />
-            </div>
-          </a>
-          <a *ngIf="socials.Github" href="{{ socials.Github }}" target="blank">
-            <div class="bg-white w-10 h-10 rounded-full">
-              <img
-                class="rounded-full p-1"
-                src="/assets/images/social/github.png"
-                alt="no_image"
-              />
-            </div>
-          </a>
-          <a
-            *ngIf="socials.Portfolio"
-            href="{{ socials.Portfolio }}"
-            target="blank"
-          >
-            <div class="bg-white w-10 h-10 rounded-full">
-              <img
-                class="rounded-full p-1"
-                src="/assets/images/social/portfolio.png"
-                alt="no_image"
-              />
-            </div>
-          </a>
-          <a *ngIf="socials.Other" href="{{ socials.Other }}" target="blank">
-            <div class="bg-white w-10 h-10 rounded-full">
-              <img
-                class="rounded-full p-1"
-                src="/assets/images/social/other.png"
-                alt="no_image"
-              />
-            </div>
-          </a>
-        </div>
+          <div class="bg-white w-10 h-10 rounded-full">
+            <img
+              class="rounded-full p-1"
+              src="/assets/images/social/instagram.png"
+              alt="no_image"
+            />
+          </div>
+        </a>
+        <a *ngIf="socials.Twitter" href="{{ socials.Twitter }}" target="blank">
+          <div class="bg-white w-10 h-10 rounded-full">
+            <img
+              class="rounded-full p-1"
+              src="/assets/images/social/twitter.png"
+              alt="no_image"
+            />
+          </div>
+        </a>
+        <a
+          *ngIf="socials.LinkedIn"
+          href="{{ socials.LinkedIn }}"
+          target="blank"
+        >
+          <div class="bg-white w-10 h-10 rounded-full">
+            <img
+              class="rounded-full p-1"
+              src="/assets/images/social/linkedin.png"
+              alt="no_image"
+            />
+          </div>
+        </a>
+        <a *ngIf="socials.Github" href="{{ socials.Github }}" target="blank">
+          <div class="bg-white w-10 h-10 rounded-full">
+            <img
+              class="rounded-full p-1"
+              src="/assets/images/social/github.png"
+              alt="no_image"
+            />
+          </div>
+        </a>
+        <a
+          *ngIf="socials.Portfolio"
+          href="{{ socials.Portfolio }}"
+          target="blank"
+        >
+          <div class="bg-white w-10 h-10 rounded-full">
+            <img
+              class="rounded-full p-1"
+              src="/assets/images/social/portfolio.png"
+              alt="no_image"
+            />
+          </div>
+        </a>
+        <a *ngIf="socials.Other" href="{{ socials.Other }}" target="blank">
+          <div class="bg-white w-10 h-10 rounded-full">
+            <img
+              class="rounded-full p-1"
+              src="/assets/images/social/other.png"
+              alt="no_image"
+            />
+          </div>
+        </a>
       </div>
       <div class="mt-4 flex flex-col items-center">
         <span class="text-2xl leading-6 uppercase font-bold">{{ name }}</span>
@@ -112,21 +106,21 @@
           {{ description }}
         </p>
       </div>
-      <div class="h-full overflow-auto">
-        <div class="grid grid-cols-4 gap-5 pl-4">
-          <button
-            *ngFor="let i of projectInfo; let index = index"
-            class="hover:drop-shadow-2xl w-44 cursor-pointer my-2"
-            (click)="openDialog(index)"
-          >
-            <img
-              class="w-full rounded-md opacity-50 hover:opacity-100 transition duration-400 ease-in-out"
-              src="http://127.0.0.1:8000/upload/{{ i.ProjectImage }}"
-              alt=""
-            />
-          </button>
-        </div>
-      </div>
+    </div>
+  </div>
+  <div class="h-full overflow-auto">
+    <div class="grid grid-cols-4 gap-5 pl-4">
+      <button
+        *ngFor="let i of projectInfo; let index = index"
+        class="hover:drop-shadow-2xl w-64 h-44 cursor-pointer my-2"
+        (click)="openDialog(index)"
+      >
+        <img
+          class="w-full rounded-md opacity-50 hover:opacity-100 transition duration-400 ease-in-out"
+          src="http://127.0.0.1:8000/upload/{{ i.ProjectImage }}"
+          alt=""
+        />
+      </button>
     </div>
   </div>
 </div>
