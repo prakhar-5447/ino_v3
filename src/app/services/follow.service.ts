@@ -12,13 +12,15 @@ export class FollowService {
 
   follow(userid: String) {
     const header = new HttpHeaders().set('content-Type', 'application/json');
-    this.http.post(
-      this.BaseUrl + 'follow',
-      { Username: userid, Followed: [] },
-      {
-        headers: header,
-      }
-    );
+    this.http
+      .post(
+        this.BaseUrl + 'follow',
+        { Username: userid, Followed: [] },
+        {
+          headers: header,
+        }
+      )
+      .subscribe((Response: any) => {});
   }
 
   getfollow(userid: String) {
@@ -31,6 +33,13 @@ export class FollowService {
   changefollow(data: any, userid: String) {
     const header = new HttpHeaders().set('content-Type', 'application/json');
     return this.http.put(this.BaseUrl + 'follow/' + userid, data, {
+      headers: header,
+    });
+  }
+
+  checkfollow(id: String, userid: String) {
+    const header = new HttpHeaders().set('content-Type', 'application/json');
+    return this.http.get<any>(this.BaseUrl + 'follow/' + userid + '/' + id, {
       headers: header,
     });
   }

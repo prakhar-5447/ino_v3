@@ -10,10 +10,10 @@ export class ModalService {
   projectData!: project[];
   socialData!: getsocial;
   index!: any;
-  followList!: any;
+  followList: any[] = [];
   id!: String;
 
-  constructor(private auth: AuthService) {}
+  constructor() {}
 
   setSocial(data: getsocial) {
     this.socialData = data;
