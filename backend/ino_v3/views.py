@@ -3,6 +3,7 @@ from rest_framework.parsers import JSONParser
 from django.http.response import JsonResponse
 from django.core.files.storage import default_storage
 from django.http import FileResponse
+import json
 
 from ino_v3.models import Signup, Login, Social, Followed, Project
 from ino_v3.serializers import SignupSerializer, LoginSerializer, SocialSerializer, FollowedSerializer, ProjectSerializer
@@ -63,6 +64,22 @@ def userApi(request, username="", id=0):
 
 
 @csrf_exempt
+def updateApi(request, userId=0):
+    reqData = JSONParser().parse(request)
+    if request.method == "PUT":
+        UserData = Signup.objects.get(
+            Id=userId)
+        if UserData:
+            user_serializer = SignupSerializer(
+                UserData, data=reqData)
+            if user_serializer.is_valid():
+                user_serializer.save()
+                return JsonResponse({'success': True, 'msg': "Update Sucessfully"})
+            return JsonResponse({'success': False, 'msg': "Failed"})
+        return JsonResponse({'success': False, 'msg': "User not Exist"})
+
+
+@csrf_exempt
 def uploadApi(request, name=''):
     if request.method == "POST":
         file_data = request.FILES["file"]
@@ -102,23 +119,33 @@ def socialApi(request, userId=0):
         if not Username:
             return JsonResponse({'success': False, 'msg': "User Not Found"})
         socialData = Social.objects.filter(
-            Username_id=userId, Id=reqData["Id"])
+            Username_id=userId, Id=reqData["Id"]).first()
         if socialData:
-            newSocial = {
-                "Instagram": reqData["Instagram"],
-                "Twitter": reqData["Twitter"],
-                "Github": reqData["Github"],
-                "LinkedIn": reqData["LinkedIn"],
-                "Portfolio": reqData["Portfolio"],
-                "Other": reqData["Other"],
-            }
             social_serializer = SocialSerializer(
-                socialData, data=newSocial)
+                socialData, data=reqData)
             if social_serializer.is_valid():
                 social_serializer.save()
                 return JsonResponse({'success': True, 'msg': "Update Sucessfully"})
             return JsonResponse({'success': False, 'msg': "Failed"})
         return JsonResponse({'success': False, 'msg': "Social Not Found"})
+
+
+@csrf_exempt
+def checkFollowApi(request, userId=0, id=0):
+    if request.method == "GET":
+        username = Signup.objects.filter(Id=userId)
+        if not username:
+            return JsonResponse({'success': False, 'msg': "User Not Found"})
+        followData = Followed.objects.filter(Username_id=userId).first()
+        if followData:
+            follow_serializer = FollowedSerializer(
+                followData)
+            follow = json.loads(follow_serializer.data["Followed"])
+            for i in follow:
+                if i['id'] == id:
+                    return JsonResponse({'success': True, 'msg': "Following"})
+            return JsonResponse({'success': False, 'msg': "Not Following"})
+        return JsonResponse({'success': False, 'msg': "Folowed Not Found"})
 
 
 @csrf_exempt
@@ -150,13 +177,10 @@ def followApi(request, userId=0):
         if not Username:
             return JsonResponse({'success': False, 'msg': "User Not Found"})
         followData = Followed.objects.filter(
-            Username_id=userId, Id=reqData["Id"])
+            Username_id=userId, Id=reqData["Id"]).first()
         if followData:
-            newFollow = {
-                "Followed": reqData["Followed"],
-            }
             follow_serializer = FollowedSerializer(
-                followData, data=newFollow)
+                followData, data=reqData)
             if follow_serializer.is_valid():
                 follow_serializer.save()
                 return JsonResponse({'success': True, 'msg': "Update Sucessfully"})
