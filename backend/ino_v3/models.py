@@ -15,39 +15,39 @@ grid_fs_storage = GridFSStorage(
 
 class Signup(models.Model):
     Id = models.AutoField(primary_key=True)
-    Name = models.CharField(max_length=30)
-    Username = models.CharField(max_length=30)
-    Avatar = models.CharField(max_length=50)
-    Email = models.CharField(max_length=50)
-    Password = models.CharField(max_length=16)
-    Description = models.CharField(max_length=100)
-    Phone_no = models.CharField(max_length=15)
+    Name = models.TextField()
+    Username = models.TextField()
+    Avatar = models.TextField()
+    Email = models.TextField()
+    Password = models.TextField()
+    Description = models.TextField()
+    Phone_no = models.TextField()
 
 
 class Login(models.Model):
     Id = models.AutoField(primary_key=True)
-    Name = models.CharField(max_length=30)
-    Username = models.CharField(max_length=30)
-    Avatar = models.CharField(max_length=50)
-    Email = models.CharField(max_length=50)
-    Description = models.CharField(max_length=100)
-    Phone_no = models.CharField(max_length=15)
+    Name = models.TextField()
+    Username = models.TextField()
+    Avatar = models.TextField()
+    Email = models.TextField()
+    Description = models.TextField()
+    Phone_no = models.TextField()
 
 
 class Social(models.Model):
     Id = models.AutoField(primary_key=True)
     Username = models.ForeignKey(
         Signup, on_delete=models.CASCADE)
-    Instagram = models.CharField(max_length=100)
-    Twitter = models.CharField(max_length=100)
-    Github = models.CharField(max_length=100)
-    LinkedIn = models.CharField(max_length=100)
-    Portfolio = models.CharField(max_length=100)
-    Other = models.CharField(max_length=100)
+    Instagram = models.URLField(max_length=100)
+    Twitter = models.URLField(max_length=100)
+    Github = models.URLField(max_length=100)
+    LinkedIn = models.URLField(max_length=100)
+    Portfolio = models.URLField(max_length=100)
+    Other = models.URLField(max_length=100)
 
 
 class Follow(models.Model):
-    id = models.CharField(max_length=3)
+    id = models.TextField()
 
     class Meta:
         abstract = True
@@ -62,7 +62,7 @@ class FollowForm(forms.ModelForm):
 
 
 class Tech(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.TextField()
 
     class Meta:
         abstract = True
@@ -90,11 +90,11 @@ class Project(models.Model):
     Id = models.AutoField(primary_key=True)
     Username = models.ForeignKey(
         Signup, on_delete=models.CASCADE)
-    Title = models.CharField(max_length=20)
-    ProjectImage = models.CharField(max_length=50)
-    Url = models.CharField(max_length=50)
+    Title = models.TextField()
+    ProjectImage = models.TextField()
+    Url = models.TextField()
     Technology = models.ArrayField(
         model_container=Tech,
         model_form_class=TechForm
     )
-    Description = models.CharField(max_length=100)
+    Description = models.TextField()

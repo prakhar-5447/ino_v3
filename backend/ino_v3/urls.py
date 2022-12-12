@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^login$', views.loginApi),
     path('user/<str:username>', views.userApi),
     path('userId/<str:id>', views.userApi),
+    path('password/<str:userId>', views.getPasswordApi),
     url(r'^upload$', views.uploadApi),
     path('upload/<str:name>', views.uploadApi),
     url(r'^social$', views.socialApi),

@@ -65,18 +65,28 @@ def userApi(request, username="", id=0):
 
 @csrf_exempt
 def updateApi(request, userId=0):
-    reqData = JSONParser().parse(request)
     if request.method == "PUT":
-        UserData = Signup.objects.get(
-            Id=userId)
-        if UserData:
+        reqData = JSONParser().parse(request)
+        userData = Signup.objects.filter(
+            Id=userId).first()
+        if userData:
             user_serializer = SignupSerializer(
-                UserData, data=reqData)
+                userData, data=reqData)
             if user_serializer.is_valid():
                 user_serializer.save()
                 return JsonResponse({'success': True, 'msg': "Update Sucessfully"})
             return JsonResponse({'success': False, 'msg': "Failed"})
-        return JsonResponse({'success': False, 'msg': "User not Exist"})
+        return JsonResponse({'success': False, 'msg': "User Not Found"})
+
+
+@csrf_exempt
+def getPasswordApi(request, userId=0):
+    if request.method == "GET":
+        userData = Signup.objects.filter(Id=userId).first()
+        if not userData:
+            return JsonResponse({'success': False, 'msg': "User Not Found"})
+        signup_serializer = SignupSerializer(userData)
+        return JsonResponse({'success': True, 'msg': signup_serializer.data["Password"]})
 
 
 @csrf_exempt
