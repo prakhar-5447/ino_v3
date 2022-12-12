@@ -54,7 +54,7 @@ export class SignupComponent implements OnInit {
           Email: this.signupForm.value['email'],
           Username: this.signupForm.value['username'],
           Password: this.signupForm.value['password'],
-          Description: 'My name is' + this.signupForm.value['name'],
+          Description: 'My name is ' + this.signupForm.value['name'],
           Avatar: this.photoImage,
           Phone_no: this.signupForm.value['phone_no'],
         };

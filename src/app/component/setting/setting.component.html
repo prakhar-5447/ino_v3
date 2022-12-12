@@ -1,1 +1,55 @@
-<div class="bg-white p-4">This is setting page</div>
+<div class="flex flex-col pt-20 pl-20 w-min bg-white p-10 rounded-3xl">
+  <div class="mt-8">
+    <form (ngSubmit)="save()" [formGroup]="profileForm" class="flex flex-col">
+      <div *ngIf="avatar" class="flex items-center justify-center">
+        <label
+          for="file-upload"
+          class="border-dashed border-2 bg-slate-400 w-44 h-44 mb-10 flex justify-center items-center font-medium rounded-full"
+        >
+          <img
+            class="rounded-full w-44 h-44 drop-shadow-lg"
+            src="http://127.0.0.1:8000/upload/{{ avatar }}"
+            alt="no_image"
+          />
+        </label>
+      </div>
+      <input
+        #fileInput
+        id="file-upload"
+        class="hidden"
+        type="file"
+        name="file"
+        accept="image/png, image/jpeg"
+      />
+      <mat-form-field class="w-80" appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput type="text" placeholder="" formControlName="name" />
+      </mat-form-field>
+      <mat-form-field class="w-80" appearance="fill">
+        <mat-label>Phone No.</mat-label>
+        <input
+          matInput
+          (keypress)="numberOnly($event)"
+          placeholder="Enter 10-digit phone number"
+          formControlName="phone_no"
+        />
+      </mat-form-field>
+      <mat-form-field class="w-80" appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+      </mat-form-field>
+      <div class="flex justify-between">
+        <button
+          mat-raised-button
+          type="submit"
+          [disabled]="profileForm.invalid"
+          color="accent"
+          class="w-32 h-12"
+        >
+          Save
+        </button>
+        <button (click)="redirect()" class="w-32 h-12">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

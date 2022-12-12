@@ -1,8 +1,8 @@
 import { Dialog } from '@angular/cdk/dialog';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FollowedComponent } from '../followed/followed.component';
 import { SearchComponent } from '../search/search.component';
-import { SettingComponent } from '../setting/setting.component';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,7 +10,7 @@ import { SettingComponent } from '../setting/setting.component';
   styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent implements OnInit {
-  constructor(public dialog: Dialog) {}
+  constructor(public dialog: Dialog, private router: Router) {}
 
   ngOnInit(): void {}
   openDialog_followed() {
@@ -19,7 +19,8 @@ export class SidebarComponent implements OnInit {
   openDialog_search() {
     this.dialog.open(SearchComponent);
   }
-  openDialog_setting() {
-    this.dialog.open(SettingComponent);
+  log_out() {
+    localStorage.clear();
+    this.router.navigateByUrl('/login');
   }
 }

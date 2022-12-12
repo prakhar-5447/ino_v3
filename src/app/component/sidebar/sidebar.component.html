@@ -6,8 +6,13 @@
     <button (click)="openDialog_search()" mat-icon-button>
       <mat-icon>search</mat-icon>
     </button>
-    <button (click)="openDialog_setting()" mat-icon-button>
-      <mat-icon>settings</mat-icon>
+    <button (click)="log_out()" mat-icon-button>
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+    <button mat-icon-button>
+      <a routerLink="setting">
+        <mat-icon>settings</mat-icon>
+      </a>
     </button>
   </div>
   <router-outlet></router-outlet>

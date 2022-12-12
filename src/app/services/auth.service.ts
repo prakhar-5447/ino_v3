@@ -78,4 +78,18 @@ export class AuthService {
     }
     return { success: false, userId: userId };
   }
+
+  updateProfile(data: any, userid: String) {
+    const header = new HttpHeaders().set('content-Type', 'application/json');
+    return this.http.put(this.BaseUrl + 'update/' + userid, data, {
+      headers: header,
+    });
+  }
+
+  getPassword(userid: String) {
+    const header = new HttpHeaders().set('content-Type', 'application/json');
+    return this.http.get<any>(this.BaseUrl + 'password/' + userid, {
+      headers: header,
+    });
+  }
 }

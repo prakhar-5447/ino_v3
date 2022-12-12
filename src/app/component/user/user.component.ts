@@ -33,7 +33,6 @@ export class UserComponent implements OnInit {
     private project: ProjectService,
     private user: UserService,
     private modal: ModalService,
-    private follow: FollowService
   ) {
     const data = this.auth.checkAuth();
     if (!data.success) {

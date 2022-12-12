@@ -30,23 +30,26 @@ export class ViewSocialsComponent implements OnInit {
     if (!data.success) {
       this.router.navigateByUrl('/login');
     }
-    this.socialForm = new FormGroup({
-      instagram: new FormControl('', []),
-      twitter: new FormControl('', []),
-      linkedin: new FormControl('', []),
-      github: new FormControl('', []),
-      portfolio: new FormControl('', []),
-      other: new FormControl('', []),
-    });
     const socialData = this.modal.getSocial();
-    this.socialForm = new FormGroup({
-      instagram: new FormControl(socialData['Instagram'], []),
-      twitter: new FormControl(socialData['LinkedIn'], []),
-      linkedin: new FormControl(socialData['Twitter'], []),
-      github: new FormControl(socialData['Github'], []),
-      portfolio: new FormControl(socialData['Portfolio'], []),
-      other: new FormControl(socialData['Other'], []),
-    });
+    if (socialData) {
+      this.socialForm = new FormGroup({
+        instagram: new FormControl(socialData['Instagram'], []),
+        twitter: new FormControl(socialData['LinkedIn'], []),
+        linkedin: new FormControl(socialData['Twitter'], []),
+        github: new FormControl(socialData['Github'], []),
+        portfolio: new FormControl(socialData['Portfolio'], []),
+        other: new FormControl(socialData['Other'], []),
+      });
+    } else {
+      this.socialForm = new FormGroup({
+        instagram: new FormControl('', []),
+        twitter: new FormControl('', []),
+        linkedin: new FormControl('', []),
+        github: new FormControl('', []),
+        portfolio: new FormControl('', []),
+        other: new FormControl('', []),
+      });
+    }
   }
 
   ngOnInit(): void {}
@@ -62,7 +65,7 @@ export class ViewSocialsComponent implements OnInit {
           this.socialInfo = {
             Id: Response.msg[0]['Id'],
             Username: data.userId,
-            Instagram: this.socialForm.value['instagram'] || '',
+            Instagram: this.socialForm.value['instagram'],
             Twitter: this.socialForm.value['twitter'],
             LinkedIn: this.socialForm.value['linkedin'],
             Github: this.socialForm.value['github'],
