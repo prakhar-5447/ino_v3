@@ -28,7 +28,8 @@ export class SearchComponent implements OnInit {
       this.router.navigateByUrl('/login');
     }
     this.searchForm = new FormGroup({
-      searchuser: new FormControl('', [Validators.required]),
+      searchusername: new FormControl('', []),
+      searchname: new FormControl('', []),
     });
   }
 
@@ -41,16 +42,20 @@ export class SearchComponent implements OnInit {
 
   search() {
     if (this.searchForm.valid) {
-      this.follow
-        .searchname(this.searchForm.value['searchuser'])
-        .subscribe((Response: any) => {
-          this.userArray = this.userArray.concat(Response.msg);
-        });
-      this.follow
-        .searchusername(this.searchForm.value['searchuser'])
-        .subscribe((Response: any) => {
-          this.userArray = this.userArray.concat(Response.msg);
-        });
+      if (this.searchForm.value['searchusername']) {
+        this.follow
+          .searchname(this.searchForm.value['searchusername'])
+          .subscribe((Response: any) => {
+            this.userArray = this.userArray.concat(Response.msg);
+          });
+      }
+      if (this.searchForm.value['searchname']) {
+        this.follow
+          .searchusername(this.searchForm.value['searchname'])
+          .subscribe((Response: any) => {
+            this.userArray = this.userArray.concat(Response.msg);
+          });
+      }
     }
   }
 }

@@ -1,14 +1,29 @@
 <div class="bg-white">
-  <form (ngSubmit)="search()" [formGroup]="searchForm" class="example-form mx-2 mt-2">
-    <mat-form-field class="example-full-width mr-4" appearance="fill">
-      <mat-label>Search</mat-label>
-      <input
-        type="text"
-        matInput
-        formControlName="searchuser"
-        placeholder="You can use username only"
-      />
-    </mat-form-field>
+  <form
+    (ngSubmit)="search()"
+    [formGroup]="searchForm"
+    class="example-form flex items-center justify-center mx-2"
+  >
+    <div class="flex flex-col mt-4">
+      <mat-form-field class="example-full-width mr-4" appearance="fill">
+        <mat-label>Search By Username</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="searchusername"
+          placeholder="You can use username only"
+        />
+      </mat-form-field>
+      <mat-form-field class="example-full-width mr-4" appearance="fill">
+        <mat-label>Search By Name</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="searchname"
+          placeholder="You can use name only"
+        />
+      </mat-form-field>
+    </div>
     <button mat-raised-button type="submit" color="accent" class="w-32 h-12">
       SEARCH
     </button>
@@ -16,7 +31,7 @@
   <div>
     <div *ngFor="let i of userArray" class="group text-base">
       <div
-        class="py-4 bg-white  group-hover:bg-gray-light drop-shadow-xl flex items-center justify-between px-4"
+        class="py-4 bg-white group-hover:bg-gray-light drop-shadow-xl flex items-center justify-between px-4"
       >
         <img
           class="w-8 h-8 rounded-full"
