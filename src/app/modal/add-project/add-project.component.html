@@ -18,6 +18,7 @@
         </label>
         <input
           #fileInput
+          (change)="file_selected($event)"
           class="hidden"
           type="file"
           name="file"

@@ -13,6 +13,8 @@ export class SignupComponent implements OnInit {
   signupForm!: FormGroup;
   photoImage!: String;
   credential!: signup;
+  url!: String;
+
   constructor(private auth: AuthService, private router: Router) {
     this.signupForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(8)]),
@@ -36,6 +38,16 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {
     if (localStorage.getItem('authId')) {
       this.router.navigateByUrl('/');
+    }
+  }
+
+  file_selected(e: any) {
+    if (e.target.files && e.target.files[0]) {
+      var reader = new FileReader();
+      reader.onload = (event: any) => {
+        this.url = event.target.result;
+      };
+      reader.readAsDataURL(e.target.files[0]);
     }
   }
 

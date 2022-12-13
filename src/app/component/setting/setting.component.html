@@ -7,14 +7,22 @@
           class="border-dashed border-2 bg-slate-400 w-44 h-44 mb-10 flex justify-center items-center font-medium rounded-full"
         >
           <img
+            *ngIf="!url"
             class="rounded-full w-44 h-44 drop-shadow-lg"
             src="http://127.0.0.1:8000/upload/{{ avatar }}"
+            alt="no_image"
+          />
+          <img
+            *ngIf="url"
+            class="rounded-full w-44 h-44 drop-shadow-lg"
+            [src]="url"
             alt="no_image"
           />
         </label>
       </div>
       <input
         #fileInput
+        (change)="file_selected($event)"
         id="file-upload"
         class="hidden"
         type="file"

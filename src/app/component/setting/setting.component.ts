@@ -18,6 +18,7 @@ export class SettingComponent implements OnInit {
   email: String = '';
   description: String = '';
   credential!: signup;
+  url!: String;
 
   constructor(private auth: AuthService, private router: Router) {
     const data = this.auth.checkAuth();
@@ -112,6 +113,16 @@ export class SettingComponent implements OnInit {
             });
         }
       });
+    }
+  }
+
+  file_selected(e: any) {
+    if (e.target.files && e.target.files[0]) {
+      var reader = new FileReader();
+      reader.onload = (event: any) => {
+        this.url = event.target.result;
+      };
+      reader.readAsDataURL(e.target.files[0]);
     }
   }
 
