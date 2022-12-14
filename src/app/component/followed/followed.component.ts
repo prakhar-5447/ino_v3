@@ -41,6 +41,22 @@ export class FollowedComponent implements OnInit {
         }
       } else {
         this.follow.follow(data.userId);
+        this.follow.getfollow(data.userId).subscribe((Response: any) => {
+          if (Response.success) {
+            this.modal.setFollowList(Response.msg[0]['Followed']);
+            this.modal.setId(Response.msg[0]['Id']);
+            this.followArray = this.modal.getFollowList();
+            for (let i = 0; i < this.followArray.length; i++) {
+              this.auth
+                .getuserId(this.followArray[i].id)
+                .subscribe((Response: any) => {
+                  if (Response.success) {
+                    this.followed.push(Response.msg);
+                  }
+                });
+            }
+          }
+        });
       }
     });
   }

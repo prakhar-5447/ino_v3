@@ -5,6 +5,7 @@
     <div class="flex items-center justify-center flex-col">
       <div class="relative flex items-center justify-center">
         <button
+          *ngIf="show"
           (click)="follow_toogle()"
           class="absolute bottom-0 right-0 bg-white rounded-full p-2"
         >

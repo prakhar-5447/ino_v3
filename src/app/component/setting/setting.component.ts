@@ -25,6 +25,14 @@ export class SettingComponent implements OnInit {
     if (!data.success) {
       this.router.navigateByUrl('/login');
     }
+    this.profileForm = new FormGroup({
+      name: new FormControl(this.name, []),
+      phone_no: new FormControl(this.phone_no, [
+        Validators.minLength(10),
+        Validators.maxLength(10),
+      ]),
+      description: new FormControl(this.description, []),
+    });
     this.auth.getuserId(data.userId).subscribe((Response: any) => {
       if (Response.success) {
         this.name = Response.msg['Name'];
@@ -101,7 +109,6 @@ export class SettingComponent implements OnInit {
             Description: this.profileForm.value['description'],
             Phone_no: this.profileForm.value['phone_no'],
           };
-          console.log(this.credential);
           this.auth
             .updateProfile(this.credential, data.userId)
             .subscribe((Response: any) => {

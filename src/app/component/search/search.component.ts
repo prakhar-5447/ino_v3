@@ -44,14 +44,14 @@ export class SearchComponent implements OnInit {
     if (this.searchForm.valid) {
       if (this.searchForm.value['searchusername']) {
         this.follow
-          .searchname(this.searchForm.value['searchusername'])
+          .searchusername(this.searchForm.value['searchusername'])
           .subscribe((Response: any) => {
             this.userArray = this.userArray.concat(Response.msg);
           });
       }
       if (this.searchForm.value['searchname']) {
         this.follow
-          .searchusername(this.searchForm.value['searchname'])
+          .searchname(this.searchForm.value['searchname'])
           .subscribe((Response: any) => {
             this.userArray = this.userArray.concat(Response.msg);
           });

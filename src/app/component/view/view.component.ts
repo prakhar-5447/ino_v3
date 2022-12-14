@@ -27,6 +27,7 @@ export class ViewComponent implements OnInit {
   projectInfo: project[] = [];
   socials!: getsocial;
   followed: any[] = [];
+  show: Boolean = false;
 
   constructor(
     public dialog: Dialog,
@@ -43,6 +44,20 @@ export class ViewComponent implements OnInit {
     if (!data.success) {
       this.router.navigateByUrl('/login');
     }
+    this.follow.getfollow(data.userId).subscribe((Response: any) => {
+      if (Response.success) {
+        this.modal.setFollowList(Response.msg[0]['Followed']);
+        this.modal.setId(Response.msg[0]['Id']);
+      } else {
+        this.follow.follow(data.userId);
+        this.follow.getfollow(data.userId).subscribe((Response: any) => {
+          if (Response.success) {
+            this.modal.setFollowList(Response.msg[0]['Followed']);
+            this.modal.setId(Response.msg[0]['Id']);
+          }
+        });
+      }
+    });
     this.route.params.subscribe((params) => {
       this.userid = params['id'];
       this.auth.getuserId(this.userid).subscribe((Response: any) => {
@@ -53,14 +68,14 @@ export class ViewComponent implements OnInit {
           this.email = Response.msg['Email'];
           this.description = Response.msg['Description'];
           this.avatar = Response.msg['Avatar'];
+          this.follow
+            .checkfollow(this.id, data.userId)
+            .subscribe((Response: any) => {
+              this.following = Response.success;
+              this.show = true;
+            });
         }
       });
-      this.follow
-        .checkfollow(data.userId, this.userid)
-        .subscribe((Response: any) => {
-          this.following = Response.success;
-          console.log(Response.success);
-        });
       this.user.getsocial(this.userid).subscribe((Response: any) => {
         if (Response.success) {
           this.socials = Response.msg[0];
@@ -104,11 +119,12 @@ export class ViewComponent implements OnInit {
           if (Response.success) {
             this.following = !this.following;
             this.modal.setFollowList(newFollorList);
+            this.show = false;
             this.follow
               .checkfollow(data.userId, this.userid)
               .subscribe((Response: any) => {
                 this.following = Response.success;
-                console.log(Response.success);
+                this.show = true;
               });
           } else {
             alert(Response.msg);
@@ -128,12 +144,12 @@ export class ViewComponent implements OnInit {
           if (Response.success) {
             this.following = !this.following;
             this.modal.setFollowList(newFollorList);
-
+            this.show = false;
             this.follow
               .checkfollow(data.userId, this.userid)
               .subscribe((Response: any) => {
                 this.following = Response.success;
-                console.log(Response.success);
+                this.show = true;
               });
           } else {
             alert(Response.msg);

@@ -38,10 +38,15 @@
       >
         <label
           for="file-upload"
-          class="border-dashed border-2 opacity-60 bg-slate-400 w-44 h-44 mb-10 flex justify-center items-center font-medium rounded-full"
+          class="border-dashed border-2 opacity-80 bg-slate-400 w-44 h-44 mb-10 flex justify-center items-center font-medium rounded-full"
         >
-          <p>Select Image</p>
-        </label>
+          <p *ngIf="!url">Select Image</p>
+          <img
+            *ngIf="url"
+            [src]="url"
+            alt="image"
+            class="w-44 h-44 bg-center border rounded-full"
+        /></label>
         <input
           #fileInput
           (change)="file_selected($event)"

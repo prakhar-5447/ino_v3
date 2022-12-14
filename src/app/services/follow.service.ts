@@ -39,7 +39,7 @@ export class FollowService {
 
   checkfollow(id: String, userid: String) {
     const header = new HttpHeaders().set('content-Type', 'application/json');
-    return this.http.get<any>(this.BaseUrl + 'follow/' + userid + '/' + id, {
+    return this.http.get<any>(this.BaseUrl + 'check/' + userid + '/' + id, {
       headers: header,
     });
   }
